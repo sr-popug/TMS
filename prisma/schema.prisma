@@ -1,0 +1,78 @@
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/shared/lib/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id    String  @id @default(uuid())
+  name  String?
+  roles Roles[]
+}
+
+enum Roles {
+  admin
+  editor
+  coach
+  organizer
+}
+
+model Tournament {
+  id          String     @id @default(uuid())
+  name        String
+  description String?
+  info        String
+  place       String
+  categories  Category[]
+  timetable   TimeRow[]
+  startDate   DateTime
+  endDate     DateTime?
+}
+
+model TimeRow {
+  id           String         @id @default(uuid())
+  tournament   Tournament? @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  tournamentId String?     
+  date         DateTime
+  timeline     String
+  event        String
+}
+
+model Category {
+  id           String      @id @default(uuid())
+  tournament   Tournament? @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  tournamentId String?     
+  age          String
+  weight       String
+  fighters     Fighter[]
+  matches      Match[]
+}
+
+model Match {
+  id         String    @id @default(uuid())
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String?
+  round      Int
+  number     Int
+  fighter1   Fighter?  @relation("Fighter1Matches", fields: [fighter1Id], references: [id])
+  fighter1Id Int?
+  fighter2   Fighter?  @relation("Fighter2Matches", fields: [fighter2Id], references: [id])
+  fighter2Id Int?
+  winner     Int?
+}
+
+model Fighter {
+  id         Int       @id @default(autoincrement())
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  categoryId String?
+  order      Int
+  name       String
+  birthday   DateTime
+
+  matchesAsFighter1 Match[] @relation("Fighter1Matches")
+  matchesAsFighter2 Match[] @relation("Fighter2Matches")
+}
