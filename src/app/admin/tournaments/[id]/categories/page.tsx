@@ -1,5 +1,4 @@
-import { getTournamentById } from '@/entities/tournament';
-import { ChangeCategories } from '@/widgets/ChangeCategories';
+import { AdminCategories } from '@/widgets/AdminCategories';
 
 export default async function CategoryPage({
   params,
@@ -7,14 +6,11 @@ export default async function CategoryPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const tournament = await getTournamentById(id);
-  if (!tournament) {
-    return '';
-  }
+
   return (
     <article>
       <h2 className='font-bold text-xl mb-2'>Изменить Категории</h2>
-      <ChangeCategories tournamentId={id} />
+      <AdminCategories tournamentId={id} />
     </article>
   );
 }

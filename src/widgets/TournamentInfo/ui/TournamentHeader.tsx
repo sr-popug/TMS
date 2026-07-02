@@ -36,6 +36,10 @@ const getLinks = (id: string, isAdmin: boolean) => {
       title: 'Категории',
       href: `/admin/tournaments/${id}/categories`,
     });
+    links.push({
+      title: 'Документы',
+      href: `/admin/tournaments/${id}/documents`,
+    });
   }
   return links;
 };

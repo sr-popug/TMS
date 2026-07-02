@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prisma": "npx prisma migrate reset && npx prisma db push && npx prisma db push && npx prisma db seed"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",

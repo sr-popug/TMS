@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Tournament: 'Tournament',
+  Club: 'Club',
   TimeRow: 'TimeRow',
   Category: 'Category',
   Match: 'Match',
@@ -97,6 +98,15 @@ export const TournamentScalarFieldEnum = {
 export type TournamentScalarFieldEnum = (typeof TournamentScalarFieldEnum)[keyof typeof TournamentScalarFieldEnum]
 
 
+export const ClubScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  tournamentId: 'tournamentId'
+} as const
+
+export type ClubScalarFieldEnum = (typeof ClubScalarFieldEnum)[keyof typeof ClubScalarFieldEnum]
+
+
 export const TimeRowScalarFieldEnum = {
   id: 'id',
   tournamentId: 'tournamentId',
@@ -121,6 +131,7 @@ export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typ
 export const MatchScalarFieldEnum = {
   id: 'id',
   categoryId: 'categoryId',
+  tournamentId: 'tournamentId',
   round: 'round',
   number: 'number',
   fighter1Id: 'fighter1Id',
@@ -134,9 +145,12 @@ export type MatchScalarFieldEnum = (typeof MatchScalarFieldEnum)[keyof typeof Ma
 export const FighterScalarFieldEnum = {
   id: 'id',
   categoryId: 'categoryId',
+  tournamentId: 'tournamentId',
   order: 'order',
   name: 'name',
-  birthday: 'birthday'
+  birthday: 'birthday',
+  weight: 'weight',
+  clubId: 'clubId'
 } as const
 
 export type FighterScalarFieldEnum = (typeof FighterScalarFieldEnum)[keyof typeof FighterScalarFieldEnum]

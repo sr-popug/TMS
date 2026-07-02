@@ -10,6 +10,7 @@
  */
 export type * from './models/User'
 export type * from './models/Tournament'
+export type * from './models/Club'
 export type * from './models/TimeRow'
 export type * from './models/Category'
 export type * from './models/Match'

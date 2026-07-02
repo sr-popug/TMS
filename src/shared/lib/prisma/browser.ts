@@ -28,6 +28,11 @@ export type User = Prisma.UserModel
  */
 export type Tournament = Prisma.TournamentModel
 /**
+ * Model Club
+ * 
+ */
+export type Club = Prisma.ClubModel
+/**
  * Model TimeRow
  * 
  */

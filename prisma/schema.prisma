@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../src/shared/lib/prisma"
@@ -29,14 +28,27 @@ model Tournament {
   place       String
   categories  Category[]
   timetable   TimeRow[]
+  fighters    Fighter[]
   startDate   DateTime
   endDate     DateTime?
+  matches     Match[]
+  clubs       Club[]
+}
+
+model Club {
+  id    Int    @id @default(autoincrement())
+  title String
+
+  tournament   Tournament? @relation(fields: [tournamentId], references: [id])
+  tournamentId String?
+
+  fighters Fighter[]
 }
 
 model TimeRow {
-  id           String         @id @default(uuid())
+  id           String      @id @default(uuid())
   tournament   Tournament? @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
-  tournamentId String?     
+  tournamentId String?
   date         DateTime
   timeline     String
   event        String
@@ -45,7 +57,7 @@ model TimeRow {
 model Category {
   id           String      @id @default(uuid())
   tournament   Tournament? @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
-  tournamentId String?     
+  tournamentId String?
   age          String
   weight       String
   fighters     Fighter[]
@@ -53,25 +65,33 @@ model Category {
 }
 
 model Match {
-  id         String    @id @default(uuid())
-  category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  categoryId String?
-  round      Int
-  number     Int
-  fighter1   Fighter?  @relation("Fighter1Matches", fields: [fighter1Id], references: [id])
-  fighter1Id Int?
-  fighter2   Fighter?  @relation("Fighter2Matches", fields: [fighter2Id], references: [id])
-  fighter2Id Int?
-  winner     Int?
+  id           String      @id @default(uuid())
+  category     Category?   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId   String?
+  tournament   Tournament? @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  tournamentId String?
+  round        Int
+  number       Int
+  fighter1     Fighter?    @relation("Fighter1Matches", fields: [fighter1Id], references: [id])
+  fighter1Id   Int?
+  fighter2     Fighter?    @relation("Fighter2Matches", fields: [fighter2Id], references: [id])
+  fighter2Id   Int?
+  winner       Int?
 }
 
 model Fighter {
-  id         Int       @id @default(autoincrement())
-  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  categoryId String?
-  order      Int
-  name       String
-  birthday   DateTime
+  id           Int         @id @default(autoincrement())
+  category     Category?   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  categoryId   String?
+  tournament   Tournament? @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  tournamentId String?
+  order        Int
+  name         String
+  birthday     DateTime
+  weight       Float
+
+  club   Club? @relation(fields: [clubId], references: [id])
+  clubId Int?
 
   matchesAsFighter1 Match[] @relation("Fighter1Matches")
   matchesAsFighter2 Match[] @relation("Fighter2Matches")

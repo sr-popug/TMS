@@ -6,5 +6,5 @@ export interface WeightCategory {
 export interface AgeCategory {
   id: string;
   age: string;
-  weights: WeightCategory[];
+  weights: { id: string; weight: string }[];
 }

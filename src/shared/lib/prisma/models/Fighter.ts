@@ -29,35 +29,48 @@ export type AggregateFighter = {
 export type FighterAvgAggregateOutputType = {
   id: number | null
   order: number | null
+  weight: number | null
+  clubId: number | null
 }
 
 export type FighterSumAggregateOutputType = {
   id: number | null
   order: number | null
+  weight: number | null
+  clubId: number | null
 }
 
 export type FighterMinAggregateOutputType = {
   id: number | null
   categoryId: string | null
+  tournamentId: string | null
   order: number | null
   name: string | null
   birthday: Date | null
+  weight: number | null
+  clubId: number | null
 }
 
 export type FighterMaxAggregateOutputType = {
   id: number | null
   categoryId: string | null
+  tournamentId: string | null
   order: number | null
   name: string | null
   birthday: Date | null
+  weight: number | null
+  clubId: number | null
 }
 
 export type FighterCountAggregateOutputType = {
   id: number
   categoryId: number
+  tournamentId: number
   order: number
   name: number
   birthday: number
+  weight: number
+  clubId: number
   _all: number
 }
 
@@ -65,35 +78,48 @@ export type FighterCountAggregateOutputType = {
 export type FighterAvgAggregateInputType = {
   id?: true
   order?: true
+  weight?: true
+  clubId?: true
 }
 
 export type FighterSumAggregateInputType = {
   id?: true
   order?: true
+  weight?: true
+  clubId?: true
 }
 
 export type FighterMinAggregateInputType = {
   id?: true
   categoryId?: true
+  tournamentId?: true
   order?: true
   name?: true
   birthday?: true
+  weight?: true
+  clubId?: true
 }
 
 export type FighterMaxAggregateInputType = {
   id?: true
   categoryId?: true
+  tournamentId?: true
   order?: true
   name?: true
   birthday?: true
+  weight?: true
+  clubId?: true
 }
 
 export type FighterCountAggregateInputType = {
   id?: true
   categoryId?: true
+  tournamentId?: true
   order?: true
   name?: true
   birthday?: true
+  weight?: true
+  clubId?: true
   _all?: true
 }
 
@@ -186,9 +212,12 @@ export type FighterGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type FighterGroupByOutputType = {
   id: number
   categoryId: string | null
+  tournamentId: string | null
   order: number
   name: string
   birthday: Date
+  weight: number
+  clubId: number | null
   _count: FighterCountAggregateOutputType | null
   _avg: FighterAvgAggregateOutputType | null
   _sum: FighterSumAggregateOutputType | null
@@ -217,10 +246,15 @@ export type FighterWhereInput = {
   NOT?: Prisma.FighterWhereInput | Prisma.FighterWhereInput[]
   id?: Prisma.IntFilter<"Fighter"> | number
   categoryId?: Prisma.StringNullableFilter<"Fighter"> | string | null
+  tournamentId?: Prisma.StringNullableFilter<"Fighter"> | string | null
   order?: Prisma.IntFilter<"Fighter"> | number
   name?: Prisma.StringFilter<"Fighter"> | string
   birthday?: Prisma.DateTimeFilter<"Fighter"> | Date | string
+  weight?: Prisma.FloatFilter<"Fighter"> | number
+  clubId?: Prisma.IntNullableFilter<"Fighter"> | number | null
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
+  tournament?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
+  club?: Prisma.XOR<Prisma.ClubNullableScalarRelationFilter, Prisma.ClubWhereInput> | null
   matchesAsFighter1?: Prisma.MatchListRelationFilter
   matchesAsFighter2?: Prisma.MatchListRelationFilter
 }
@@ -228,10 +262,15 @@ export type FighterWhereInput = {
 export type FighterOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  tournamentId?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrder
   name?: Prisma.SortOrder
   birthday?: Prisma.SortOrder
+  weight?: Prisma.SortOrder
+  clubId?: Prisma.SortOrderInput | Prisma.SortOrder
   category?: Prisma.CategoryOrderByWithRelationInput
+  tournament?: Prisma.TournamentOrderByWithRelationInput
+  club?: Prisma.ClubOrderByWithRelationInput
   matchesAsFighter1?: Prisma.MatchOrderByRelationAggregateInput
   matchesAsFighter2?: Prisma.MatchOrderByRelationAggregateInput
 }
@@ -242,10 +281,15 @@ export type FighterWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.FighterWhereInput[]
   NOT?: Prisma.FighterWhereInput | Prisma.FighterWhereInput[]
   categoryId?: Prisma.StringNullableFilter<"Fighter"> | string | null
+  tournamentId?: Prisma.StringNullableFilter<"Fighter"> | string | null
   order?: Prisma.IntFilter<"Fighter"> | number
   name?: Prisma.StringFilter<"Fighter"> | string
   birthday?: Prisma.DateTimeFilter<"Fighter"> | Date | string
+  weight?: Prisma.FloatFilter<"Fighter"> | number
+  clubId?: Prisma.IntNullableFilter<"Fighter"> | number | null
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
+  tournament?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
+  club?: Prisma.XOR<Prisma.ClubNullableScalarRelationFilter, Prisma.ClubWhereInput> | null
   matchesAsFighter1?: Prisma.MatchListRelationFilter
   matchesAsFighter2?: Prisma.MatchListRelationFilter
 }, "id">
@@ -253,9 +297,12 @@ export type FighterWhereUniqueInput = Prisma.AtLeast<{
 export type FighterOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  tournamentId?: Prisma.SortOrderInput | Prisma.SortOrder
   order?: Prisma.SortOrder
   name?: Prisma.SortOrder
   birthday?: Prisma.SortOrder
+  weight?: Prisma.SortOrder
+  clubId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.FighterCountOrderByAggregateInput
   _avg?: Prisma.FighterAvgOrderByAggregateInput
   _max?: Prisma.FighterMaxOrderByAggregateInput
@@ -269,16 +316,22 @@ export type FighterScalarWhereWithAggregatesInput = {
   NOT?: Prisma.FighterScalarWhereWithAggregatesInput | Prisma.FighterScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Fighter"> | number
   categoryId?: Prisma.StringNullableWithAggregatesFilter<"Fighter"> | string | null
+  tournamentId?: Prisma.StringNullableWithAggregatesFilter<"Fighter"> | string | null
   order?: Prisma.IntWithAggregatesFilter<"Fighter"> | number
   name?: Prisma.StringWithAggregatesFilter<"Fighter"> | string
   birthday?: Prisma.DateTimeWithAggregatesFilter<"Fighter"> | Date | string
+  weight?: Prisma.FloatWithAggregatesFilter<"Fighter"> | number
+  clubId?: Prisma.IntNullableWithAggregatesFilter<"Fighter"> | number | null
 }
 
 export type FighterCreateInput = {
   order: number
   name: string
   birthday: Date | string
+  weight: number
   category?: Prisma.CategoryCreateNestedOneWithoutFightersInput
+  tournament?: Prisma.TournamentCreateNestedOneWithoutFightersInput
+  club?: Prisma.ClubCreateNestedOneWithoutFightersInput
   matchesAsFighter1?: Prisma.MatchCreateNestedManyWithoutFighter1Input
   matchesAsFighter2?: Prisma.MatchCreateNestedManyWithoutFighter2Input
 }
@@ -286,9 +339,12 @@ export type FighterCreateInput = {
 export type FighterUncheckedCreateInput = {
   id?: number
   categoryId?: string | null
+  tournamentId?: string | null
   order: number
   name: string
   birthday: Date | string
+  weight: number
+  clubId?: number | null
   matchesAsFighter1?: Prisma.MatchUncheckedCreateNestedManyWithoutFighter1Input
   matchesAsFighter2?: Prisma.MatchUncheckedCreateNestedManyWithoutFighter2Input
 }
@@ -297,7 +353,10 @@ export type FighterUpdateInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
   category?: Prisma.CategoryUpdateOneWithoutFightersNestedInput
+  tournament?: Prisma.TournamentUpdateOneWithoutFightersNestedInput
+  club?: Prisma.ClubUpdateOneWithoutFightersNestedInput
   matchesAsFighter1?: Prisma.MatchUpdateManyWithoutFighter1NestedInput
   matchesAsFighter2?: Prisma.MatchUpdateManyWithoutFighter2NestedInput
 }
@@ -305,9 +364,12 @@ export type FighterUpdateInput = {
 export type FighterUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  clubId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   matchesAsFighter1?: Prisma.MatchUncheckedUpdateManyWithoutFighter1NestedInput
   matchesAsFighter2?: Prisma.MatchUncheckedUpdateManyWithoutFighter2NestedInput
 }
@@ -315,23 +377,30 @@ export type FighterUncheckedUpdateInput = {
 export type FighterCreateManyInput = {
   id?: number
   categoryId?: string | null
+  tournamentId?: string | null
   order: number
   name: string
   birthday: Date | string
+  weight: number
+  clubId?: number | null
 }
 
 export type FighterUpdateManyMutationInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type FighterUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  clubId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type FighterListRelationFilter = {
@@ -352,35 +421,132 @@ export type FighterNullableScalarRelationFilter = {
 export type FighterCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  tournamentId?: Prisma.SortOrder
   order?: Prisma.SortOrder
   name?: Prisma.SortOrder
   birthday?: Prisma.SortOrder
+  weight?: Prisma.SortOrder
+  clubId?: Prisma.SortOrder
 }
 
 export type FighterAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  weight?: Prisma.SortOrder
+  clubId?: Prisma.SortOrder
 }
 
 export type FighterMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  tournamentId?: Prisma.SortOrder
   order?: Prisma.SortOrder
   name?: Prisma.SortOrder
   birthday?: Prisma.SortOrder
+  weight?: Prisma.SortOrder
+  clubId?: Prisma.SortOrder
 }
 
 export type FighterMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  tournamentId?: Prisma.SortOrder
   order?: Prisma.SortOrder
   name?: Prisma.SortOrder
   birthday?: Prisma.SortOrder
+  weight?: Prisma.SortOrder
+  clubId?: Prisma.SortOrder
 }
 
 export type FighterSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   order?: Prisma.SortOrder
+  weight?: Prisma.SortOrder
+  clubId?: Prisma.SortOrder
+}
+
+export type FighterCreateNestedManyWithoutTournamentInput = {
+  create?: Prisma.XOR<Prisma.FighterCreateWithoutTournamentInput, Prisma.FighterUncheckedCreateWithoutTournamentInput> | Prisma.FighterCreateWithoutTournamentInput[] | Prisma.FighterUncheckedCreateWithoutTournamentInput[]
+  connectOrCreate?: Prisma.FighterCreateOrConnectWithoutTournamentInput | Prisma.FighterCreateOrConnectWithoutTournamentInput[]
+  createMany?: Prisma.FighterCreateManyTournamentInputEnvelope
+  connect?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+}
+
+export type FighterUncheckedCreateNestedManyWithoutTournamentInput = {
+  create?: Prisma.XOR<Prisma.FighterCreateWithoutTournamentInput, Prisma.FighterUncheckedCreateWithoutTournamentInput> | Prisma.FighterCreateWithoutTournamentInput[] | Prisma.FighterUncheckedCreateWithoutTournamentInput[]
+  connectOrCreate?: Prisma.FighterCreateOrConnectWithoutTournamentInput | Prisma.FighterCreateOrConnectWithoutTournamentInput[]
+  createMany?: Prisma.FighterCreateManyTournamentInputEnvelope
+  connect?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+}
+
+export type FighterUpdateManyWithoutTournamentNestedInput = {
+  create?: Prisma.XOR<Prisma.FighterCreateWithoutTournamentInput, Prisma.FighterUncheckedCreateWithoutTournamentInput> | Prisma.FighterCreateWithoutTournamentInput[] | Prisma.FighterUncheckedCreateWithoutTournamentInput[]
+  connectOrCreate?: Prisma.FighterCreateOrConnectWithoutTournamentInput | Prisma.FighterCreateOrConnectWithoutTournamentInput[]
+  upsert?: Prisma.FighterUpsertWithWhereUniqueWithoutTournamentInput | Prisma.FighterUpsertWithWhereUniqueWithoutTournamentInput[]
+  createMany?: Prisma.FighterCreateManyTournamentInputEnvelope
+  set?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+  disconnect?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+  delete?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+  connect?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+  update?: Prisma.FighterUpdateWithWhereUniqueWithoutTournamentInput | Prisma.FighterUpdateWithWhereUniqueWithoutTournamentInput[]
+  updateMany?: Prisma.FighterUpdateManyWithWhereWithoutTournamentInput | Prisma.FighterUpdateManyWithWhereWithoutTournamentInput[]
+  deleteMany?: Prisma.FighterScalarWhereInput | Prisma.FighterScalarWhereInput[]
+}
+
+export type FighterUncheckedUpdateManyWithoutTournamentNestedInput = {
+  create?: Prisma.XOR<Prisma.FighterCreateWithoutTournamentInput, Prisma.FighterUncheckedCreateWithoutTournamentInput> | Prisma.FighterCreateWithoutTournamentInput[] | Prisma.FighterUncheckedCreateWithoutTournamentInput[]
+  connectOrCreate?: Prisma.FighterCreateOrConnectWithoutTournamentInput | Prisma.FighterCreateOrConnectWithoutTournamentInput[]
+  upsert?: Prisma.FighterUpsertWithWhereUniqueWithoutTournamentInput | Prisma.FighterUpsertWithWhereUniqueWithoutTournamentInput[]
+  createMany?: Prisma.FighterCreateManyTournamentInputEnvelope
+  set?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+  disconnect?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+  delete?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+  connect?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+  update?: Prisma.FighterUpdateWithWhereUniqueWithoutTournamentInput | Prisma.FighterUpdateWithWhereUniqueWithoutTournamentInput[]
+  updateMany?: Prisma.FighterUpdateManyWithWhereWithoutTournamentInput | Prisma.FighterUpdateManyWithWhereWithoutTournamentInput[]
+  deleteMany?: Prisma.FighterScalarWhereInput | Prisma.FighterScalarWhereInput[]
+}
+
+export type FighterCreateNestedManyWithoutClubInput = {
+  create?: Prisma.XOR<Prisma.FighterCreateWithoutClubInput, Prisma.FighterUncheckedCreateWithoutClubInput> | Prisma.FighterCreateWithoutClubInput[] | Prisma.FighterUncheckedCreateWithoutClubInput[]
+  connectOrCreate?: Prisma.FighterCreateOrConnectWithoutClubInput | Prisma.FighterCreateOrConnectWithoutClubInput[]
+  createMany?: Prisma.FighterCreateManyClubInputEnvelope
+  connect?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+}
+
+export type FighterUncheckedCreateNestedManyWithoutClubInput = {
+  create?: Prisma.XOR<Prisma.FighterCreateWithoutClubInput, Prisma.FighterUncheckedCreateWithoutClubInput> | Prisma.FighterCreateWithoutClubInput[] | Prisma.FighterUncheckedCreateWithoutClubInput[]
+  connectOrCreate?: Prisma.FighterCreateOrConnectWithoutClubInput | Prisma.FighterCreateOrConnectWithoutClubInput[]
+  createMany?: Prisma.FighterCreateManyClubInputEnvelope
+  connect?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+}
+
+export type FighterUpdateManyWithoutClubNestedInput = {
+  create?: Prisma.XOR<Prisma.FighterCreateWithoutClubInput, Prisma.FighterUncheckedCreateWithoutClubInput> | Prisma.FighterCreateWithoutClubInput[] | Prisma.FighterUncheckedCreateWithoutClubInput[]
+  connectOrCreate?: Prisma.FighterCreateOrConnectWithoutClubInput | Prisma.FighterCreateOrConnectWithoutClubInput[]
+  upsert?: Prisma.FighterUpsertWithWhereUniqueWithoutClubInput | Prisma.FighterUpsertWithWhereUniqueWithoutClubInput[]
+  createMany?: Prisma.FighterCreateManyClubInputEnvelope
+  set?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+  disconnect?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+  delete?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+  connect?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+  update?: Prisma.FighterUpdateWithWhereUniqueWithoutClubInput | Prisma.FighterUpdateWithWhereUniqueWithoutClubInput[]
+  updateMany?: Prisma.FighterUpdateManyWithWhereWithoutClubInput | Prisma.FighterUpdateManyWithWhereWithoutClubInput[]
+  deleteMany?: Prisma.FighterScalarWhereInput | Prisma.FighterScalarWhereInput[]
+}
+
+export type FighterUncheckedUpdateManyWithoutClubNestedInput = {
+  create?: Prisma.XOR<Prisma.FighterCreateWithoutClubInput, Prisma.FighterUncheckedCreateWithoutClubInput> | Prisma.FighterCreateWithoutClubInput[] | Prisma.FighterUncheckedCreateWithoutClubInput[]
+  connectOrCreate?: Prisma.FighterCreateOrConnectWithoutClubInput | Prisma.FighterCreateOrConnectWithoutClubInput[]
+  upsert?: Prisma.FighterUpsertWithWhereUniqueWithoutClubInput | Prisma.FighterUpsertWithWhereUniqueWithoutClubInput[]
+  createMany?: Prisma.FighterCreateManyClubInputEnvelope
+  set?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+  disconnect?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+  delete?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+  connect?: Prisma.FighterWhereUniqueInput | Prisma.FighterWhereUniqueInput[]
+  update?: Prisma.FighterUpdateWithWhereUniqueWithoutClubInput | Prisma.FighterUpdateWithWhereUniqueWithoutClubInput[]
+  updateMany?: Prisma.FighterUpdateManyWithWhereWithoutClubInput | Prisma.FighterUpdateManyWithWhereWithoutClubInput[]
+  deleteMany?: Prisma.FighterScalarWhereInput | Prisma.FighterScalarWhereInput[]
 }
 
 export type FighterCreateNestedManyWithoutCategoryInput = {
@@ -457,19 +623,145 @@ export type FighterUpdateOneWithoutMatchesAsFighter2NestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.FighterUpdateToOneWithWhereWithoutMatchesAsFighter2Input, Prisma.FighterUpdateWithoutMatchesAsFighter2Input>, Prisma.FighterUncheckedUpdateWithoutMatchesAsFighter2Input>
 }
 
+export type FloatFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type FighterCreateWithoutTournamentInput = {
+  order: number
+  name: string
+  birthday: Date | string
+  weight: number
+  category?: Prisma.CategoryCreateNestedOneWithoutFightersInput
+  club?: Prisma.ClubCreateNestedOneWithoutFightersInput
+  matchesAsFighter1?: Prisma.MatchCreateNestedManyWithoutFighter1Input
+  matchesAsFighter2?: Prisma.MatchCreateNestedManyWithoutFighter2Input
+}
+
+export type FighterUncheckedCreateWithoutTournamentInput = {
+  id?: number
+  categoryId?: string | null
+  order: number
+  name: string
+  birthday: Date | string
+  weight: number
+  clubId?: number | null
+  matchesAsFighter1?: Prisma.MatchUncheckedCreateNestedManyWithoutFighter1Input
+  matchesAsFighter2?: Prisma.MatchUncheckedCreateNestedManyWithoutFighter2Input
+}
+
+export type FighterCreateOrConnectWithoutTournamentInput = {
+  where: Prisma.FighterWhereUniqueInput
+  create: Prisma.XOR<Prisma.FighterCreateWithoutTournamentInput, Prisma.FighterUncheckedCreateWithoutTournamentInput>
+}
+
+export type FighterCreateManyTournamentInputEnvelope = {
+  data: Prisma.FighterCreateManyTournamentInput | Prisma.FighterCreateManyTournamentInput[]
+  skipDuplicates?: boolean
+}
+
+export type FighterUpsertWithWhereUniqueWithoutTournamentInput = {
+  where: Prisma.FighterWhereUniqueInput
+  update: Prisma.XOR<Prisma.FighterUpdateWithoutTournamentInput, Prisma.FighterUncheckedUpdateWithoutTournamentInput>
+  create: Prisma.XOR<Prisma.FighterCreateWithoutTournamentInput, Prisma.FighterUncheckedCreateWithoutTournamentInput>
+}
+
+export type FighterUpdateWithWhereUniqueWithoutTournamentInput = {
+  where: Prisma.FighterWhereUniqueInput
+  data: Prisma.XOR<Prisma.FighterUpdateWithoutTournamentInput, Prisma.FighterUncheckedUpdateWithoutTournamentInput>
+}
+
+export type FighterUpdateManyWithWhereWithoutTournamentInput = {
+  where: Prisma.FighterScalarWhereInput
+  data: Prisma.XOR<Prisma.FighterUpdateManyMutationInput, Prisma.FighterUncheckedUpdateManyWithoutTournamentInput>
+}
+
+export type FighterScalarWhereInput = {
+  AND?: Prisma.FighterScalarWhereInput | Prisma.FighterScalarWhereInput[]
+  OR?: Prisma.FighterScalarWhereInput[]
+  NOT?: Prisma.FighterScalarWhereInput | Prisma.FighterScalarWhereInput[]
+  id?: Prisma.IntFilter<"Fighter"> | number
+  categoryId?: Prisma.StringNullableFilter<"Fighter"> | string | null
+  tournamentId?: Prisma.StringNullableFilter<"Fighter"> | string | null
+  order?: Prisma.IntFilter<"Fighter"> | number
+  name?: Prisma.StringFilter<"Fighter"> | string
+  birthday?: Prisma.DateTimeFilter<"Fighter"> | Date | string
+  weight?: Prisma.FloatFilter<"Fighter"> | number
+  clubId?: Prisma.IntNullableFilter<"Fighter"> | number | null
+}
+
+export type FighterCreateWithoutClubInput = {
+  order: number
+  name: string
+  birthday: Date | string
+  weight: number
+  category?: Prisma.CategoryCreateNestedOneWithoutFightersInput
+  tournament?: Prisma.TournamentCreateNestedOneWithoutFightersInput
+  matchesAsFighter1?: Prisma.MatchCreateNestedManyWithoutFighter1Input
+  matchesAsFighter2?: Prisma.MatchCreateNestedManyWithoutFighter2Input
+}
+
+export type FighterUncheckedCreateWithoutClubInput = {
+  id?: number
+  categoryId?: string | null
+  tournamentId?: string | null
+  order: number
+  name: string
+  birthday: Date | string
+  weight: number
+  matchesAsFighter1?: Prisma.MatchUncheckedCreateNestedManyWithoutFighter1Input
+  matchesAsFighter2?: Prisma.MatchUncheckedCreateNestedManyWithoutFighter2Input
+}
+
+export type FighterCreateOrConnectWithoutClubInput = {
+  where: Prisma.FighterWhereUniqueInput
+  create: Prisma.XOR<Prisma.FighterCreateWithoutClubInput, Prisma.FighterUncheckedCreateWithoutClubInput>
+}
+
+export type FighterCreateManyClubInputEnvelope = {
+  data: Prisma.FighterCreateManyClubInput | Prisma.FighterCreateManyClubInput[]
+  skipDuplicates?: boolean
+}
+
+export type FighterUpsertWithWhereUniqueWithoutClubInput = {
+  where: Prisma.FighterWhereUniqueInput
+  update: Prisma.XOR<Prisma.FighterUpdateWithoutClubInput, Prisma.FighterUncheckedUpdateWithoutClubInput>
+  create: Prisma.XOR<Prisma.FighterCreateWithoutClubInput, Prisma.FighterUncheckedCreateWithoutClubInput>
+}
+
+export type FighterUpdateWithWhereUniqueWithoutClubInput = {
+  where: Prisma.FighterWhereUniqueInput
+  data: Prisma.XOR<Prisma.FighterUpdateWithoutClubInput, Prisma.FighterUncheckedUpdateWithoutClubInput>
+}
+
+export type FighterUpdateManyWithWhereWithoutClubInput = {
+  where: Prisma.FighterScalarWhereInput
+  data: Prisma.XOR<Prisma.FighterUpdateManyMutationInput, Prisma.FighterUncheckedUpdateManyWithoutClubInput>
+}
+
 export type FighterCreateWithoutCategoryInput = {
   order: number
   name: string
   birthday: Date | string
+  weight: number
+  tournament?: Prisma.TournamentCreateNestedOneWithoutFightersInput
+  club?: Prisma.ClubCreateNestedOneWithoutFightersInput
   matchesAsFighter1?: Prisma.MatchCreateNestedManyWithoutFighter1Input
   matchesAsFighter2?: Prisma.MatchCreateNestedManyWithoutFighter2Input
 }
 
 export type FighterUncheckedCreateWithoutCategoryInput = {
   id?: number
+  tournamentId?: string | null
   order: number
   name: string
   birthday: Date | string
+  weight: number
+  clubId?: number | null
   matchesAsFighter1?: Prisma.MatchUncheckedCreateNestedManyWithoutFighter1Input
   matchesAsFighter2?: Prisma.MatchUncheckedCreateNestedManyWithoutFighter2Input
 }
@@ -500,31 +792,26 @@ export type FighterUpdateManyWithWhereWithoutCategoryInput = {
   data: Prisma.XOR<Prisma.FighterUpdateManyMutationInput, Prisma.FighterUncheckedUpdateManyWithoutCategoryInput>
 }
 
-export type FighterScalarWhereInput = {
-  AND?: Prisma.FighterScalarWhereInput | Prisma.FighterScalarWhereInput[]
-  OR?: Prisma.FighterScalarWhereInput[]
-  NOT?: Prisma.FighterScalarWhereInput | Prisma.FighterScalarWhereInput[]
-  id?: Prisma.IntFilter<"Fighter"> | number
-  categoryId?: Prisma.StringNullableFilter<"Fighter"> | string | null
-  order?: Prisma.IntFilter<"Fighter"> | number
-  name?: Prisma.StringFilter<"Fighter"> | string
-  birthday?: Prisma.DateTimeFilter<"Fighter"> | Date | string
-}
-
 export type FighterCreateWithoutMatchesAsFighter1Input = {
   order: number
   name: string
   birthday: Date | string
+  weight: number
   category?: Prisma.CategoryCreateNestedOneWithoutFightersInput
+  tournament?: Prisma.TournamentCreateNestedOneWithoutFightersInput
+  club?: Prisma.ClubCreateNestedOneWithoutFightersInput
   matchesAsFighter2?: Prisma.MatchCreateNestedManyWithoutFighter2Input
 }
 
 export type FighterUncheckedCreateWithoutMatchesAsFighter1Input = {
   id?: number
   categoryId?: string | null
+  tournamentId?: string | null
   order: number
   name: string
   birthday: Date | string
+  weight: number
+  clubId?: number | null
   matchesAsFighter2?: Prisma.MatchUncheckedCreateNestedManyWithoutFighter2Input
 }
 
@@ -537,16 +824,22 @@ export type FighterCreateWithoutMatchesAsFighter2Input = {
   order: number
   name: string
   birthday: Date | string
+  weight: number
   category?: Prisma.CategoryCreateNestedOneWithoutFightersInput
+  tournament?: Prisma.TournamentCreateNestedOneWithoutFightersInput
+  club?: Prisma.ClubCreateNestedOneWithoutFightersInput
   matchesAsFighter1?: Prisma.MatchCreateNestedManyWithoutFighter1Input
 }
 
 export type FighterUncheckedCreateWithoutMatchesAsFighter2Input = {
   id?: number
   categoryId?: string | null
+  tournamentId?: string | null
   order: number
   name: string
   birthday: Date | string
+  weight: number
+  clubId?: number | null
   matchesAsFighter1?: Prisma.MatchUncheckedCreateNestedManyWithoutFighter1Input
 }
 
@@ -570,16 +863,22 @@ export type FighterUpdateWithoutMatchesAsFighter1Input = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
   category?: Prisma.CategoryUpdateOneWithoutFightersNestedInput
+  tournament?: Prisma.TournamentUpdateOneWithoutFightersNestedInput
+  club?: Prisma.ClubUpdateOneWithoutFightersNestedInput
   matchesAsFighter2?: Prisma.MatchUpdateManyWithoutFighter2NestedInput
 }
 
 export type FighterUncheckedUpdateWithoutMatchesAsFighter1Input = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  clubId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   matchesAsFighter2?: Prisma.MatchUncheckedUpdateManyWithoutFighter2NestedInput
 }
 
@@ -598,48 +897,152 @@ export type FighterUpdateWithoutMatchesAsFighter2Input = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
   category?: Prisma.CategoryUpdateOneWithoutFightersNestedInput
+  tournament?: Prisma.TournamentUpdateOneWithoutFightersNestedInput
+  club?: Prisma.ClubUpdateOneWithoutFightersNestedInput
   matchesAsFighter1?: Prisma.MatchUpdateManyWithoutFighter1NestedInput
 }
 
 export type FighterUncheckedUpdateWithoutMatchesAsFighter2Input = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  clubId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   matchesAsFighter1?: Prisma.MatchUncheckedUpdateManyWithoutFighter1NestedInput
+}
+
+export type FighterCreateManyTournamentInput = {
+  id?: number
+  categoryId?: string | null
+  order: number
+  name: string
+  birthday: Date | string
+  weight: number
+  clubId?: number | null
+}
+
+export type FighterUpdateWithoutTournamentInput = {
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  category?: Prisma.CategoryUpdateOneWithoutFightersNestedInput
+  club?: Prisma.ClubUpdateOneWithoutFightersNestedInput
+  matchesAsFighter1?: Prisma.MatchUpdateManyWithoutFighter1NestedInput
+  matchesAsFighter2?: Prisma.MatchUpdateManyWithoutFighter2NestedInput
+}
+
+export type FighterUncheckedUpdateWithoutTournamentInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  clubId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  matchesAsFighter1?: Prisma.MatchUncheckedUpdateManyWithoutFighter1NestedInput
+  matchesAsFighter2?: Prisma.MatchUncheckedUpdateManyWithoutFighter2NestedInput
+}
+
+export type FighterUncheckedUpdateManyWithoutTournamentInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  clubId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+export type FighterCreateManyClubInput = {
+  id?: number
+  categoryId?: string | null
+  tournamentId?: string | null
+  order: number
+  name: string
+  birthday: Date | string
+  weight: number
+}
+
+export type FighterUpdateWithoutClubInput = {
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  category?: Prisma.CategoryUpdateOneWithoutFightersNestedInput
+  tournament?: Prisma.TournamentUpdateOneWithoutFightersNestedInput
+  matchesAsFighter1?: Prisma.MatchUpdateManyWithoutFighter1NestedInput
+  matchesAsFighter2?: Prisma.MatchUpdateManyWithoutFighter2NestedInput
+}
+
+export type FighterUncheckedUpdateWithoutClubInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  matchesAsFighter1?: Prisma.MatchUncheckedUpdateManyWithoutFighter1NestedInput
+  matchesAsFighter2?: Prisma.MatchUncheckedUpdateManyWithoutFighter2NestedInput
+}
+
+export type FighterUncheckedUpdateManyWithoutClubInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
 }
 
 export type FighterCreateManyCategoryInput = {
   id?: number
+  tournamentId?: string | null
   order: number
   name: string
   birthday: Date | string
+  weight: number
+  clubId?: number | null
 }
 
 export type FighterUpdateWithoutCategoryInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  tournament?: Prisma.TournamentUpdateOneWithoutFightersNestedInput
+  club?: Prisma.ClubUpdateOneWithoutFightersNestedInput
   matchesAsFighter1?: Prisma.MatchUpdateManyWithoutFighter1NestedInput
   matchesAsFighter2?: Prisma.MatchUpdateManyWithoutFighter2NestedInput
 }
 
 export type FighterUncheckedUpdateWithoutCategoryInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  clubId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   matchesAsFighter1?: Prisma.MatchUncheckedUpdateManyWithoutFighter1NestedInput
   matchesAsFighter2?: Prisma.MatchUncheckedUpdateManyWithoutFighter2NestedInput
 }
 
 export type FighterUncheckedUpdateManyWithoutCategoryInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   order?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   birthday?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  weight?: Prisma.FloatFieldUpdateOperationsInput | number
+  clubId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -685,10 +1088,15 @@ export type FighterCountOutputTypeCountMatchesAsFighter2Args<ExtArgs extends run
 export type FighterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   categoryId?: boolean
+  tournamentId?: boolean
   order?: boolean
   name?: boolean
   birthday?: boolean
+  weight?: boolean
+  clubId?: boolean
   category?: boolean | Prisma.Fighter$categoryArgs<ExtArgs>
+  tournament?: boolean | Prisma.Fighter$tournamentArgs<ExtArgs>
+  club?: boolean | Prisma.Fighter$clubArgs<ExtArgs>
   matchesAsFighter1?: boolean | Prisma.Fighter$matchesAsFighter1Args<ExtArgs>
   matchesAsFighter2?: boolean | Prisma.Fighter$matchesAsFighter2Args<ExtArgs>
   _count?: boolean | Prisma.FighterCountOutputTypeDefaultArgs<ExtArgs>
@@ -697,56 +1105,80 @@ export type FighterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type FighterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   categoryId?: boolean
+  tournamentId?: boolean
   order?: boolean
   name?: boolean
   birthday?: boolean
+  weight?: boolean
+  clubId?: boolean
   category?: boolean | Prisma.Fighter$categoryArgs<ExtArgs>
+  tournament?: boolean | Prisma.Fighter$tournamentArgs<ExtArgs>
+  club?: boolean | Prisma.Fighter$clubArgs<ExtArgs>
 }, ExtArgs["result"]["fighter"]>
 
 export type FighterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   categoryId?: boolean
+  tournamentId?: boolean
   order?: boolean
   name?: boolean
   birthday?: boolean
+  weight?: boolean
+  clubId?: boolean
   category?: boolean | Prisma.Fighter$categoryArgs<ExtArgs>
+  tournament?: boolean | Prisma.Fighter$tournamentArgs<ExtArgs>
+  club?: boolean | Prisma.Fighter$clubArgs<ExtArgs>
 }, ExtArgs["result"]["fighter"]>
 
 export type FighterSelectScalar = {
   id?: boolean
   categoryId?: boolean
+  tournamentId?: boolean
   order?: boolean
   name?: boolean
   birthday?: boolean
+  weight?: boolean
+  clubId?: boolean
 }
 
-export type FighterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "categoryId" | "order" | "name" | "birthday", ExtArgs["result"]["fighter"]>
+export type FighterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "categoryId" | "tournamentId" | "order" | "name" | "birthday" | "weight" | "clubId", ExtArgs["result"]["fighter"]>
 export type FighterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.Fighter$categoryArgs<ExtArgs>
+  tournament?: boolean | Prisma.Fighter$tournamentArgs<ExtArgs>
+  club?: boolean | Prisma.Fighter$clubArgs<ExtArgs>
   matchesAsFighter1?: boolean | Prisma.Fighter$matchesAsFighter1Args<ExtArgs>
   matchesAsFighter2?: boolean | Prisma.Fighter$matchesAsFighter2Args<ExtArgs>
   _count?: boolean | Prisma.FighterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type FighterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.Fighter$categoryArgs<ExtArgs>
+  tournament?: boolean | Prisma.Fighter$tournamentArgs<ExtArgs>
+  club?: boolean | Prisma.Fighter$clubArgs<ExtArgs>
 }
 export type FighterIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.Fighter$categoryArgs<ExtArgs>
+  tournament?: boolean | Prisma.Fighter$tournamentArgs<ExtArgs>
+  club?: boolean | Prisma.Fighter$clubArgs<ExtArgs>
 }
 
 export type $FighterPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Fighter"
   objects: {
     category: Prisma.$CategoryPayload<ExtArgs> | null
+    tournament: Prisma.$TournamentPayload<ExtArgs> | null
+    club: Prisma.$ClubPayload<ExtArgs> | null
     matchesAsFighter1: Prisma.$MatchPayload<ExtArgs>[]
     matchesAsFighter2: Prisma.$MatchPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     categoryId: string | null
+    tournamentId: string | null
     order: number
     name: string
     birthday: Date
+    weight: number
+    clubId: number | null
   }, ExtArgs["result"]["fighter"]>
   composites: {}
 }
@@ -1142,6 +1574,8 @@ readonly fields: FighterFieldRefs;
 export interface Prisma__FighterClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   category<T extends Prisma.Fighter$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fighter$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  tournament<T extends Prisma.Fighter$tournamentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fighter$tournamentArgs<ExtArgs>>): Prisma.Prisma__TournamentClient<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  club<T extends Prisma.Fighter$clubArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fighter$clubArgs<ExtArgs>>): Prisma.Prisma__ClubClient<runtime.Types.Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   matchesAsFighter1<T extends Prisma.Fighter$matchesAsFighter1Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fighter$matchesAsFighter1Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   matchesAsFighter2<T extends Prisma.Fighter$matchesAsFighter2Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fighter$matchesAsFighter2Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1175,9 +1609,12 @@ export interface Prisma__FighterClient<T, Null = never, ExtArgs extends runtime.
 export interface FighterFieldRefs {
   readonly id: Prisma.FieldRef<"Fighter", 'Int'>
   readonly categoryId: Prisma.FieldRef<"Fighter", 'String'>
+  readonly tournamentId: Prisma.FieldRef<"Fighter", 'String'>
   readonly order: Prisma.FieldRef<"Fighter", 'Int'>
   readonly name: Prisma.FieldRef<"Fighter", 'String'>
   readonly birthday: Prisma.FieldRef<"Fighter", 'DateTime'>
+  readonly weight: Prisma.FieldRef<"Fighter", 'Float'>
+  readonly clubId: Prisma.FieldRef<"Fighter", 'Int'>
 }
     
 
@@ -1595,6 +2032,44 @@ export type Fighter$categoryArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   include?: Prisma.CategoryInclude<ExtArgs> | null
   where?: Prisma.CategoryWhereInput
+}
+
+/**
+ * Fighter.tournament
+ */
+export type Fighter$tournamentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Tournament
+   */
+  select?: Prisma.TournamentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Tournament
+   */
+  omit?: Prisma.TournamentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TournamentInclude<ExtArgs> | null
+  where?: Prisma.TournamentWhereInput
+}
+
+/**
+ * Fighter.club
+ */
+export type Fighter$clubArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Club
+   */
+  select?: Prisma.ClubSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Club
+   */
+  omit?: Prisma.ClubOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClubInclude<ExtArgs> | null
+  where?: Prisma.ClubWhereInput
 }
 
 /**

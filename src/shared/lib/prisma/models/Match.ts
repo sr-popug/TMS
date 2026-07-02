@@ -45,6 +45,7 @@ export type MatchSumAggregateOutputType = {
 export type MatchMinAggregateOutputType = {
   id: string | null
   categoryId: string | null
+  tournamentId: string | null
   round: number | null
   number: number | null
   fighter1Id: number | null
@@ -55,6 +56,7 @@ export type MatchMinAggregateOutputType = {
 export type MatchMaxAggregateOutputType = {
   id: string | null
   categoryId: string | null
+  tournamentId: string | null
   round: number | null
   number: number | null
   fighter1Id: number | null
@@ -65,6 +67,7 @@ export type MatchMaxAggregateOutputType = {
 export type MatchCountAggregateOutputType = {
   id: number
   categoryId: number
+  tournamentId: number
   round: number
   number: number
   fighter1Id: number
@@ -93,6 +96,7 @@ export type MatchSumAggregateInputType = {
 export type MatchMinAggregateInputType = {
   id?: true
   categoryId?: true
+  tournamentId?: true
   round?: true
   number?: true
   fighter1Id?: true
@@ -103,6 +107,7 @@ export type MatchMinAggregateInputType = {
 export type MatchMaxAggregateInputType = {
   id?: true
   categoryId?: true
+  tournamentId?: true
   round?: true
   number?: true
   fighter1Id?: true
@@ -113,6 +118,7 @@ export type MatchMaxAggregateInputType = {
 export type MatchCountAggregateInputType = {
   id?: true
   categoryId?: true
+  tournamentId?: true
   round?: true
   number?: true
   fighter1Id?: true
@@ -210,6 +216,7 @@ export type MatchGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type MatchGroupByOutputType = {
   id: string
   categoryId: string | null
+  tournamentId: string | null
   round: number
   number: number
   fighter1Id: number | null
@@ -243,12 +250,14 @@ export type MatchWhereInput = {
   NOT?: Prisma.MatchWhereInput | Prisma.MatchWhereInput[]
   id?: Prisma.StringFilter<"Match"> | string
   categoryId?: Prisma.StringNullableFilter<"Match"> | string | null
+  tournamentId?: Prisma.StringNullableFilter<"Match"> | string | null
   round?: Prisma.IntFilter<"Match"> | number
   number?: Prisma.IntFilter<"Match"> | number
   fighter1Id?: Prisma.IntNullableFilter<"Match"> | number | null
   fighter2Id?: Prisma.IntNullableFilter<"Match"> | number | null
   winner?: Prisma.IntNullableFilter<"Match"> | number | null
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
+  tournament?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
   fighter1?: Prisma.XOR<Prisma.FighterNullableScalarRelationFilter, Prisma.FighterWhereInput> | null
   fighter2?: Prisma.XOR<Prisma.FighterNullableScalarRelationFilter, Prisma.FighterWhereInput> | null
 }
@@ -256,12 +265,14 @@ export type MatchWhereInput = {
 export type MatchOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  tournamentId?: Prisma.SortOrderInput | Prisma.SortOrder
   round?: Prisma.SortOrder
   number?: Prisma.SortOrder
   fighter1Id?: Prisma.SortOrderInput | Prisma.SortOrder
   fighter2Id?: Prisma.SortOrderInput | Prisma.SortOrder
   winner?: Prisma.SortOrderInput | Prisma.SortOrder
   category?: Prisma.CategoryOrderByWithRelationInput
+  tournament?: Prisma.TournamentOrderByWithRelationInput
   fighter1?: Prisma.FighterOrderByWithRelationInput
   fighter2?: Prisma.FighterOrderByWithRelationInput
 }
@@ -272,12 +283,14 @@ export type MatchWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.MatchWhereInput[]
   NOT?: Prisma.MatchWhereInput | Prisma.MatchWhereInput[]
   categoryId?: Prisma.StringNullableFilter<"Match"> | string | null
+  tournamentId?: Prisma.StringNullableFilter<"Match"> | string | null
   round?: Prisma.IntFilter<"Match"> | number
   number?: Prisma.IntFilter<"Match"> | number
   fighter1Id?: Prisma.IntNullableFilter<"Match"> | number | null
   fighter2Id?: Prisma.IntNullableFilter<"Match"> | number | null
   winner?: Prisma.IntNullableFilter<"Match"> | number | null
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
+  tournament?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
   fighter1?: Prisma.XOR<Prisma.FighterNullableScalarRelationFilter, Prisma.FighterWhereInput> | null
   fighter2?: Prisma.XOR<Prisma.FighterNullableScalarRelationFilter, Prisma.FighterWhereInput> | null
 }, "id">
@@ -285,6 +298,7 @@ export type MatchWhereUniqueInput = Prisma.AtLeast<{
 export type MatchOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
+  tournamentId?: Prisma.SortOrderInput | Prisma.SortOrder
   round?: Prisma.SortOrder
   number?: Prisma.SortOrder
   fighter1Id?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -303,6 +317,7 @@ export type MatchScalarWhereWithAggregatesInput = {
   NOT?: Prisma.MatchScalarWhereWithAggregatesInput | Prisma.MatchScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Match"> | string
   categoryId?: Prisma.StringNullableWithAggregatesFilter<"Match"> | string | null
+  tournamentId?: Prisma.StringNullableWithAggregatesFilter<"Match"> | string | null
   round?: Prisma.IntWithAggregatesFilter<"Match"> | number
   number?: Prisma.IntWithAggregatesFilter<"Match"> | number
   fighter1Id?: Prisma.IntNullableWithAggregatesFilter<"Match"> | number | null
@@ -316,6 +331,7 @@ export type MatchCreateInput = {
   number: number
   winner?: number | null
   category?: Prisma.CategoryCreateNestedOneWithoutMatchesInput
+  tournament?: Prisma.TournamentCreateNestedOneWithoutMatchesInput
   fighter1?: Prisma.FighterCreateNestedOneWithoutMatchesAsFighter1Input
   fighter2?: Prisma.FighterCreateNestedOneWithoutMatchesAsFighter2Input
 }
@@ -323,6 +339,7 @@ export type MatchCreateInput = {
 export type MatchUncheckedCreateInput = {
   id?: string
   categoryId?: string | null
+  tournamentId?: string | null
   round: number
   number: number
   fighter1Id?: number | null
@@ -336,6 +353,7 @@ export type MatchUpdateInput = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   category?: Prisma.CategoryUpdateOneWithoutMatchesNestedInput
+  tournament?: Prisma.TournamentUpdateOneWithoutMatchesNestedInput
   fighter1?: Prisma.FighterUpdateOneWithoutMatchesAsFighter1NestedInput
   fighter2?: Prisma.FighterUpdateOneWithoutMatchesAsFighter2NestedInput
 }
@@ -343,6 +361,7 @@ export type MatchUpdateInput = {
 export type MatchUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   number?: Prisma.IntFieldUpdateOperationsInput | number
   fighter1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -353,6 +372,7 @@ export type MatchUncheckedUpdateInput = {
 export type MatchCreateManyInput = {
   id?: string
   categoryId?: string | null
+  tournamentId?: string | null
   round: number
   number: number
   fighter1Id?: number | null
@@ -370,6 +390,7 @@ export type MatchUpdateManyMutationInput = {
 export type MatchUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   number?: Prisma.IntFieldUpdateOperationsInput | number
   fighter1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -390,6 +411,7 @@ export type MatchOrderByRelationAggregateInput = {
 export type MatchCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  tournamentId?: Prisma.SortOrder
   round?: Prisma.SortOrder
   number?: Prisma.SortOrder
   fighter1Id?: Prisma.SortOrder
@@ -408,6 +430,7 @@ export type MatchAvgOrderByAggregateInput = {
 export type MatchMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  tournamentId?: Prisma.SortOrder
   round?: Prisma.SortOrder
   number?: Prisma.SortOrder
   fighter1Id?: Prisma.SortOrder
@@ -418,6 +441,7 @@ export type MatchMaxOrderByAggregateInput = {
 export type MatchMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
+  tournamentId?: Prisma.SortOrder
   round?: Prisma.SortOrder
   number?: Prisma.SortOrder
   fighter1Id?: Prisma.SortOrder
@@ -431,6 +455,48 @@ export type MatchSumOrderByAggregateInput = {
   fighter1Id?: Prisma.SortOrder
   fighter2Id?: Prisma.SortOrder
   winner?: Prisma.SortOrder
+}
+
+export type MatchCreateNestedManyWithoutTournamentInput = {
+  create?: Prisma.XOR<Prisma.MatchCreateWithoutTournamentInput, Prisma.MatchUncheckedCreateWithoutTournamentInput> | Prisma.MatchCreateWithoutTournamentInput[] | Prisma.MatchUncheckedCreateWithoutTournamentInput[]
+  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutTournamentInput | Prisma.MatchCreateOrConnectWithoutTournamentInput[]
+  createMany?: Prisma.MatchCreateManyTournamentInputEnvelope
+  connect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
+}
+
+export type MatchUncheckedCreateNestedManyWithoutTournamentInput = {
+  create?: Prisma.XOR<Prisma.MatchCreateWithoutTournamentInput, Prisma.MatchUncheckedCreateWithoutTournamentInput> | Prisma.MatchCreateWithoutTournamentInput[] | Prisma.MatchUncheckedCreateWithoutTournamentInput[]
+  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutTournamentInput | Prisma.MatchCreateOrConnectWithoutTournamentInput[]
+  createMany?: Prisma.MatchCreateManyTournamentInputEnvelope
+  connect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
+}
+
+export type MatchUpdateManyWithoutTournamentNestedInput = {
+  create?: Prisma.XOR<Prisma.MatchCreateWithoutTournamentInput, Prisma.MatchUncheckedCreateWithoutTournamentInput> | Prisma.MatchCreateWithoutTournamentInput[] | Prisma.MatchUncheckedCreateWithoutTournamentInput[]
+  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutTournamentInput | Prisma.MatchCreateOrConnectWithoutTournamentInput[]
+  upsert?: Prisma.MatchUpsertWithWhereUniqueWithoutTournamentInput | Prisma.MatchUpsertWithWhereUniqueWithoutTournamentInput[]
+  createMany?: Prisma.MatchCreateManyTournamentInputEnvelope
+  set?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
+  disconnect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
+  delete?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
+  connect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
+  update?: Prisma.MatchUpdateWithWhereUniqueWithoutTournamentInput | Prisma.MatchUpdateWithWhereUniqueWithoutTournamentInput[]
+  updateMany?: Prisma.MatchUpdateManyWithWhereWithoutTournamentInput | Prisma.MatchUpdateManyWithWhereWithoutTournamentInput[]
+  deleteMany?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
+}
+
+export type MatchUncheckedUpdateManyWithoutTournamentNestedInput = {
+  create?: Prisma.XOR<Prisma.MatchCreateWithoutTournamentInput, Prisma.MatchUncheckedCreateWithoutTournamentInput> | Prisma.MatchCreateWithoutTournamentInput[] | Prisma.MatchUncheckedCreateWithoutTournamentInput[]
+  connectOrCreate?: Prisma.MatchCreateOrConnectWithoutTournamentInput | Prisma.MatchCreateOrConnectWithoutTournamentInput[]
+  upsert?: Prisma.MatchUpsertWithWhereUniqueWithoutTournamentInput | Prisma.MatchUpsertWithWhereUniqueWithoutTournamentInput[]
+  createMany?: Prisma.MatchCreateManyTournamentInputEnvelope
+  set?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
+  disconnect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
+  delete?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
+  connect?: Prisma.MatchWhereUniqueInput | Prisma.MatchWhereUniqueInput[]
+  update?: Prisma.MatchUpdateWithWhereUniqueWithoutTournamentInput | Prisma.MatchUpdateWithWhereUniqueWithoutTournamentInput[]
+  updateMany?: Prisma.MatchUpdateManyWithWhereWithoutTournamentInput | Prisma.MatchUpdateManyWithWhereWithoutTournamentInput[]
+  deleteMany?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
 }
 
 export type MatchCreateNestedManyWithoutCategoryInput = {
@@ -473,14 +539,6 @@ export type MatchUncheckedUpdateManyWithoutCategoryNestedInput = {
   update?: Prisma.MatchUpdateWithWhereUniqueWithoutCategoryInput | Prisma.MatchUpdateWithWhereUniqueWithoutCategoryInput[]
   updateMany?: Prisma.MatchUpdateManyWithWhereWithoutCategoryInput | Prisma.MatchUpdateManyWithWhereWithoutCategoryInput[]
   deleteMany?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
-}
-
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
 }
 
 export type NullableIntFieldUpdateOperationsInput = {
@@ -575,17 +633,79 @@ export type MatchUncheckedUpdateManyWithoutFighter2NestedInput = {
   deleteMany?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
 }
 
+export type MatchCreateWithoutTournamentInput = {
+  id?: string
+  round: number
+  number: number
+  winner?: number | null
+  category?: Prisma.CategoryCreateNestedOneWithoutMatchesInput
+  fighter1?: Prisma.FighterCreateNestedOneWithoutMatchesAsFighter1Input
+  fighter2?: Prisma.FighterCreateNestedOneWithoutMatchesAsFighter2Input
+}
+
+export type MatchUncheckedCreateWithoutTournamentInput = {
+  id?: string
+  categoryId?: string | null
+  round: number
+  number: number
+  fighter1Id?: number | null
+  fighter2Id?: number | null
+  winner?: number | null
+}
+
+export type MatchCreateOrConnectWithoutTournamentInput = {
+  where: Prisma.MatchWhereUniqueInput
+  create: Prisma.XOR<Prisma.MatchCreateWithoutTournamentInput, Prisma.MatchUncheckedCreateWithoutTournamentInput>
+}
+
+export type MatchCreateManyTournamentInputEnvelope = {
+  data: Prisma.MatchCreateManyTournamentInput | Prisma.MatchCreateManyTournamentInput[]
+  skipDuplicates?: boolean
+}
+
+export type MatchUpsertWithWhereUniqueWithoutTournamentInput = {
+  where: Prisma.MatchWhereUniqueInput
+  update: Prisma.XOR<Prisma.MatchUpdateWithoutTournamentInput, Prisma.MatchUncheckedUpdateWithoutTournamentInput>
+  create: Prisma.XOR<Prisma.MatchCreateWithoutTournamentInput, Prisma.MatchUncheckedCreateWithoutTournamentInput>
+}
+
+export type MatchUpdateWithWhereUniqueWithoutTournamentInput = {
+  where: Prisma.MatchWhereUniqueInput
+  data: Prisma.XOR<Prisma.MatchUpdateWithoutTournamentInput, Prisma.MatchUncheckedUpdateWithoutTournamentInput>
+}
+
+export type MatchUpdateManyWithWhereWithoutTournamentInput = {
+  where: Prisma.MatchScalarWhereInput
+  data: Prisma.XOR<Prisma.MatchUpdateManyMutationInput, Prisma.MatchUncheckedUpdateManyWithoutTournamentInput>
+}
+
+export type MatchScalarWhereInput = {
+  AND?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
+  OR?: Prisma.MatchScalarWhereInput[]
+  NOT?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
+  id?: Prisma.StringFilter<"Match"> | string
+  categoryId?: Prisma.StringNullableFilter<"Match"> | string | null
+  tournamentId?: Prisma.StringNullableFilter<"Match"> | string | null
+  round?: Prisma.IntFilter<"Match"> | number
+  number?: Prisma.IntFilter<"Match"> | number
+  fighter1Id?: Prisma.IntNullableFilter<"Match"> | number | null
+  fighter2Id?: Prisma.IntNullableFilter<"Match"> | number | null
+  winner?: Prisma.IntNullableFilter<"Match"> | number | null
+}
+
 export type MatchCreateWithoutCategoryInput = {
   id?: string
   round: number
   number: number
   winner?: number | null
+  tournament?: Prisma.TournamentCreateNestedOneWithoutMatchesInput
   fighter1?: Prisma.FighterCreateNestedOneWithoutMatchesAsFighter1Input
   fighter2?: Prisma.FighterCreateNestedOneWithoutMatchesAsFighter2Input
 }
 
 export type MatchUncheckedCreateWithoutCategoryInput = {
   id?: string
+  tournamentId?: string | null
   round: number
   number: number
   fighter1Id?: number | null
@@ -619,31 +739,20 @@ export type MatchUpdateManyWithWhereWithoutCategoryInput = {
   data: Prisma.XOR<Prisma.MatchUpdateManyMutationInput, Prisma.MatchUncheckedUpdateManyWithoutCategoryInput>
 }
 
-export type MatchScalarWhereInput = {
-  AND?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
-  OR?: Prisma.MatchScalarWhereInput[]
-  NOT?: Prisma.MatchScalarWhereInput | Prisma.MatchScalarWhereInput[]
-  id?: Prisma.StringFilter<"Match"> | string
-  categoryId?: Prisma.StringNullableFilter<"Match"> | string | null
-  round?: Prisma.IntFilter<"Match"> | number
-  number?: Prisma.IntFilter<"Match"> | number
-  fighter1Id?: Prisma.IntNullableFilter<"Match"> | number | null
-  fighter2Id?: Prisma.IntNullableFilter<"Match"> | number | null
-  winner?: Prisma.IntNullableFilter<"Match"> | number | null
-}
-
 export type MatchCreateWithoutFighter1Input = {
   id?: string
   round: number
   number: number
   winner?: number | null
   category?: Prisma.CategoryCreateNestedOneWithoutMatchesInput
+  tournament?: Prisma.TournamentCreateNestedOneWithoutMatchesInput
   fighter2?: Prisma.FighterCreateNestedOneWithoutMatchesAsFighter2Input
 }
 
 export type MatchUncheckedCreateWithoutFighter1Input = {
   id?: string
   categoryId?: string | null
+  tournamentId?: string | null
   round: number
   number: number
   fighter2Id?: number | null
@@ -666,12 +775,14 @@ export type MatchCreateWithoutFighter2Input = {
   number: number
   winner?: number | null
   category?: Prisma.CategoryCreateNestedOneWithoutMatchesInput
+  tournament?: Prisma.TournamentCreateNestedOneWithoutMatchesInput
   fighter1?: Prisma.FighterCreateNestedOneWithoutMatchesAsFighter1Input
 }
 
 export type MatchUncheckedCreateWithoutFighter2Input = {
   id?: string
   categoryId?: string | null
+  tournamentId?: string | null
   round: number
   number: number
   fighter1Id?: number | null
@@ -720,8 +831,49 @@ export type MatchUpdateManyWithWhereWithoutFighter2Input = {
   data: Prisma.XOR<Prisma.MatchUpdateManyMutationInput, Prisma.MatchUncheckedUpdateManyWithoutFighter2Input>
 }
 
+export type MatchCreateManyTournamentInput = {
+  id?: string
+  categoryId?: string | null
+  round: number
+  number: number
+  fighter1Id?: number | null
+  fighter2Id?: number | null
+  winner?: number | null
+}
+
+export type MatchUpdateWithoutTournamentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  round?: Prisma.IntFieldUpdateOperationsInput | number
+  number?: Prisma.IntFieldUpdateOperationsInput | number
+  winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  category?: Prisma.CategoryUpdateOneWithoutMatchesNestedInput
+  fighter1?: Prisma.FighterUpdateOneWithoutMatchesAsFighter1NestedInput
+  fighter2?: Prisma.FighterUpdateOneWithoutMatchesAsFighter2NestedInput
+}
+
+export type MatchUncheckedUpdateWithoutTournamentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  round?: Prisma.IntFieldUpdateOperationsInput | number
+  number?: Prisma.IntFieldUpdateOperationsInput | number
+  fighter1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fighter2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+export type MatchUncheckedUpdateManyWithoutTournamentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  round?: Prisma.IntFieldUpdateOperationsInput | number
+  number?: Prisma.IntFieldUpdateOperationsInput | number
+  fighter1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fighter2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
 export type MatchCreateManyCategoryInput = {
   id?: string
+  tournamentId?: string | null
   round: number
   number: number
   fighter1Id?: number | null
@@ -734,12 +886,14 @@ export type MatchUpdateWithoutCategoryInput = {
   round?: Prisma.IntFieldUpdateOperationsInput | number
   number?: Prisma.IntFieldUpdateOperationsInput | number
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tournament?: Prisma.TournamentUpdateOneWithoutMatchesNestedInput
   fighter1?: Prisma.FighterUpdateOneWithoutMatchesAsFighter1NestedInput
   fighter2?: Prisma.FighterUpdateOneWithoutMatchesAsFighter2NestedInput
 }
 
 export type MatchUncheckedUpdateWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   number?: Prisma.IntFieldUpdateOperationsInput | number
   fighter1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -749,6 +903,7 @@ export type MatchUncheckedUpdateWithoutCategoryInput = {
 
 export type MatchUncheckedUpdateManyWithoutCategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   number?: Prisma.IntFieldUpdateOperationsInput | number
   fighter1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -759,6 +914,7 @@ export type MatchUncheckedUpdateManyWithoutCategoryInput = {
 export type MatchCreateManyFighter1Input = {
   id?: string
   categoryId?: string | null
+  tournamentId?: string | null
   round: number
   number: number
   fighter2Id?: number | null
@@ -768,6 +924,7 @@ export type MatchCreateManyFighter1Input = {
 export type MatchCreateManyFighter2Input = {
   id?: string
   categoryId?: string | null
+  tournamentId?: string | null
   round: number
   number: number
   fighter1Id?: number | null
@@ -780,12 +937,14 @@ export type MatchUpdateWithoutFighter1Input = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   category?: Prisma.CategoryUpdateOneWithoutMatchesNestedInput
+  tournament?: Prisma.TournamentUpdateOneWithoutMatchesNestedInput
   fighter2?: Prisma.FighterUpdateOneWithoutMatchesAsFighter2NestedInput
 }
 
 export type MatchUncheckedUpdateWithoutFighter1Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   number?: Prisma.IntFieldUpdateOperationsInput | number
   fighter2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -795,6 +954,7 @@ export type MatchUncheckedUpdateWithoutFighter1Input = {
 export type MatchUncheckedUpdateManyWithoutFighter1Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   number?: Prisma.IntFieldUpdateOperationsInput | number
   fighter2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -807,12 +967,14 @@ export type MatchUpdateWithoutFighter2Input = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   category?: Prisma.CategoryUpdateOneWithoutMatchesNestedInput
+  tournament?: Prisma.TournamentUpdateOneWithoutMatchesNestedInput
   fighter1?: Prisma.FighterUpdateOneWithoutMatchesAsFighter1NestedInput
 }
 
 export type MatchUncheckedUpdateWithoutFighter2Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   number?: Prisma.IntFieldUpdateOperationsInput | number
   fighter1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -822,6 +984,7 @@ export type MatchUncheckedUpdateWithoutFighter2Input = {
 export type MatchUncheckedUpdateManyWithoutFighter2Input = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   number?: Prisma.IntFieldUpdateOperationsInput | number
   fighter1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -833,12 +996,14 @@ export type MatchUncheckedUpdateManyWithoutFighter2Input = {
 export type MatchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   categoryId?: boolean
+  tournamentId?: boolean
   round?: boolean
   number?: boolean
   fighter1Id?: boolean
   fighter2Id?: boolean
   winner?: boolean
   category?: boolean | Prisma.Match$categoryArgs<ExtArgs>
+  tournament?: boolean | Prisma.Match$tournamentArgs<ExtArgs>
   fighter1?: boolean | Prisma.Match$fighter1Args<ExtArgs>
   fighter2?: boolean | Prisma.Match$fighter2Args<ExtArgs>
 }, ExtArgs["result"]["match"]>
@@ -846,12 +1011,14 @@ export type MatchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type MatchSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   categoryId?: boolean
+  tournamentId?: boolean
   round?: boolean
   number?: boolean
   fighter1Id?: boolean
   fighter2Id?: boolean
   winner?: boolean
   category?: boolean | Prisma.Match$categoryArgs<ExtArgs>
+  tournament?: boolean | Prisma.Match$tournamentArgs<ExtArgs>
   fighter1?: boolean | Prisma.Match$fighter1Args<ExtArgs>
   fighter2?: boolean | Prisma.Match$fighter2Args<ExtArgs>
 }, ExtArgs["result"]["match"]>
@@ -859,12 +1026,14 @@ export type MatchSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type MatchSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   categoryId?: boolean
+  tournamentId?: boolean
   round?: boolean
   number?: boolean
   fighter1Id?: boolean
   fighter2Id?: boolean
   winner?: boolean
   category?: boolean | Prisma.Match$categoryArgs<ExtArgs>
+  tournament?: boolean | Prisma.Match$tournamentArgs<ExtArgs>
   fighter1?: boolean | Prisma.Match$fighter1Args<ExtArgs>
   fighter2?: boolean | Prisma.Match$fighter2Args<ExtArgs>
 }, ExtArgs["result"]["match"]>
@@ -872,6 +1041,7 @@ export type MatchSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type MatchSelectScalar = {
   id?: boolean
   categoryId?: boolean
+  tournamentId?: boolean
   round?: boolean
   number?: boolean
   fighter1Id?: boolean
@@ -879,19 +1049,22 @@ export type MatchSelectScalar = {
   winner?: boolean
 }
 
-export type MatchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "categoryId" | "round" | "number" | "fighter1Id" | "fighter2Id" | "winner", ExtArgs["result"]["match"]>
+export type MatchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "categoryId" | "tournamentId" | "round" | "number" | "fighter1Id" | "fighter2Id" | "winner", ExtArgs["result"]["match"]>
 export type MatchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.Match$categoryArgs<ExtArgs>
+  tournament?: boolean | Prisma.Match$tournamentArgs<ExtArgs>
   fighter1?: boolean | Prisma.Match$fighter1Args<ExtArgs>
   fighter2?: boolean | Prisma.Match$fighter2Args<ExtArgs>
 }
 export type MatchIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.Match$categoryArgs<ExtArgs>
+  tournament?: boolean | Prisma.Match$tournamentArgs<ExtArgs>
   fighter1?: boolean | Prisma.Match$fighter1Args<ExtArgs>
   fighter2?: boolean | Prisma.Match$fighter2Args<ExtArgs>
 }
 export type MatchIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.Match$categoryArgs<ExtArgs>
+  tournament?: boolean | Prisma.Match$tournamentArgs<ExtArgs>
   fighter1?: boolean | Prisma.Match$fighter1Args<ExtArgs>
   fighter2?: boolean | Prisma.Match$fighter2Args<ExtArgs>
 }
@@ -900,12 +1073,14 @@ export type $MatchPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "Match"
   objects: {
     category: Prisma.$CategoryPayload<ExtArgs> | null
+    tournament: Prisma.$TournamentPayload<ExtArgs> | null
     fighter1: Prisma.$FighterPayload<ExtArgs> | null
     fighter2: Prisma.$FighterPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     categoryId: string | null
+    tournamentId: string | null
     round: number
     number: number
     fighter1Id: number | null
@@ -1306,6 +1481,7 @@ readonly fields: MatchFieldRefs;
 export interface Prisma__MatchClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   category<T extends Prisma.Match$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Match$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  tournament<T extends Prisma.Match$tournamentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Match$tournamentArgs<ExtArgs>>): Prisma.Prisma__TournamentClient<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   fighter1<T extends Prisma.Match$fighter1Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Match$fighter1Args<ExtArgs>>): Prisma.Prisma__FighterClient<runtime.Types.Result.GetResult<Prisma.$FighterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   fighter2<T extends Prisma.Match$fighter2Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Match$fighter2Args<ExtArgs>>): Prisma.Prisma__FighterClient<runtime.Types.Result.GetResult<Prisma.$FighterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1339,6 +1515,7 @@ export interface Prisma__MatchClient<T, Null = never, ExtArgs extends runtime.Ty
 export interface MatchFieldRefs {
   readonly id: Prisma.FieldRef<"Match", 'String'>
   readonly categoryId: Prisma.FieldRef<"Match", 'String'>
+  readonly tournamentId: Prisma.FieldRef<"Match", 'String'>
   readonly round: Prisma.FieldRef<"Match", 'Int'>
   readonly number: Prisma.FieldRef<"Match", 'Int'>
   readonly fighter1Id: Prisma.FieldRef<"Match", 'Int'>
@@ -1761,6 +1938,25 @@ export type Match$categoryArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   include?: Prisma.CategoryInclude<ExtArgs> | null
   where?: Prisma.CategoryWhereInput
+}
+
+/**
+ * Match.tournament
+ */
+export type Match$tournamentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Tournament
+   */
+  select?: Prisma.TournamentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Tournament
+   */
+  omit?: Prisma.TournamentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TournamentInclude<ExtArgs> | null
+  where?: Prisma.TournamentWhereInput
 }
 
 /**

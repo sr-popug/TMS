@@ -1,199 +1,216 @@
-// prisma/seed.ts
 import { prisma } from '@/shared/config';
-import 'dotenv/config';
+import { Match } from '@/shared/lib/prisma/client';
 
 async function main() {
-  // Очистка базы
   await prisma.match.deleteMany();
   await prisma.fighter.deleteMany();
   await prisma.category.deleteMany();
   await prisma.timeRow.deleteMany();
+  await prisma.club.deleteMany();
   await prisma.tournament.deleteMany();
   await prisma.user.deleteMany();
 
-  // Пользователи
-  const admin = await prisma.user.create({
+  await prisma.user.create({
     data: {
       name: 'Администратор',
       roles: ['admin'],
     },
   });
 
-  const coach = await prisma.user.create({
-    data: {
-      name: 'Тренер Иванов',
-      roles: ['coach', 'editor'],
-    },
-  });
-
-  const organizer = await prisma.user.create({
-    data: {
-      name: 'Организатор Петров',
-      roles: ['organizer'],
-    },
-  });
-
-  // Турнир
-  const tournament = await prisma.tournament.create({
-    data: {
-      name: 'Чемпионат России 2024',
-      description: 'Ежегодный чемпионат по боевым искусствам',
-      info: 'Соревнования проводятся по олимпийской системе',
-      place: 'Москва, СК "Олимпийский"',
-      startDate: new Date('2024-03-15'),
-      endDate: new Date('2024-03-17'),
-    },
-  });
-
-  // Расписание
-  await prisma.timeRow.createMany({
-    data: [
-      {
-        tournamentId: tournament.id,
-        date: new Date('2024-03-15'),
-        timeline: '09:00',
-        event: 'Регистрация участников',
+  const tournaments = await Promise.all([
+    prisma.tournament.create({
+      data: {
+        name: 'UFC 300',
+        description: 'Юбилейный турнир UFC 300.',
+        info: 'Лас-Вегас, США. T-Mobile Arena.',
+        place: 'Лас-Вегас, США',
+        startDate: new Date('2024-04-13'),
+        endDate: new Date('2024-04-13'),
       },
-      {
-        tournamentId: tournament.id,
-        date: new Date('2024-03-15'),
-        timeline: '10:00',
-        event: 'Начало соревнований',
+    }),
+    prisma.tournament.create({
+      data: {
+        name: 'UFC 302',
+        description: 'Махачев vs Порье.',
+        info: 'Ньюарк, США. Prudential Center.',
+        place: 'Ньюарк, США',
+        startDate: new Date('2024-06-01'),
+        endDate: new Date('2024-06-01'),
       },
-      {
-        tournamentId: tournament.id,
-        date: new Date('2024-03-15'),
-        timeline: '12:00',
-        event: 'Обеденный перерыв',
+    }),
+    prisma.tournament.create({
+      data: {
+        name: 'UFC 308',
+        description: 'Топурия vs Холлоуэй.',
+        info: 'Абу-Даби, ОАЭ. Etihad Arena.',
+        place: 'Абу-Даби, ОАЭ',
+        startDate: new Date('2024-10-26'),
+        endDate: new Date('2024-10-26'),
       },
-      {
-        tournamentId: tournament.id,
-        date: new Date('2024-03-17'),
-        timeline: '18:00',
-        event: 'Награждение победителей',
+    }),
+    prisma.tournament.create({
+      data: {
+        name: 'TMS Grand Prix 2026',
+        description: 'Главный турнир года TMS.',
+        info: 'Москва, Россия. ВТБ Арена.',
+        place: 'Москва, Россия',
+        startDate: new Date('2026-12-05'),
+        endDate: new Date('2026-12-20'),
       },
-    ],
-  });
+    }),
+  ]);
 
-  // Категории
-  const category1 = await prisma.category.create({
-    data: {
-      tournamentId: tournament.id,
-      age: '18-25',
-      weight: '70',
-    },
-  });
+  for (const t of tournaments) {
+    await prisma.timeRow.createMany({
+      data: [
+        {
+          tournamentId: t.id,
+          date: t.startDate,
+          timeline: '08:00',
+          event: 'Взвешивание',
+        },
+        {
+          tournamentId: t.id,
+          date: t.startDate,
+          timeline: '10:00',
+          event: 'Медосмотр',
+        },
+        {
+          tournamentId: t.id,
+          date: t.startDate,
+          timeline: '17:00',
+          event: 'Предварительный кард',
+        },
+        {
+          tournamentId: t.id,
+          date: t.startDate,
+          timeline: '19:00',
+          event: 'Основной кард',
+        },
+      ],
+    });
+  }
 
-  const category2 = await prisma.category.create({
-    data: {
-      tournamentId: tournament.id,
-      age: '18-25',
-      weight: '80',
-    },
-  });
+  const clubNames = [
+    'ЦСКА',
+    'Ахмат',
+    'Eagles MMA',
+    'Динамо',
+    'Горец',
+    'Jackson Wink',
+    'American Top Team',
+  ];
 
-  const category3 = await prisma.category.create({
-    data: {
-      tournamentId: tournament.id,
-      age: '26-35',
-      weight: '90',
-    },
-  });
+  const clubs: { id: number; tournamentId: string | null }[] = [];
+  for (const t of tournaments) {
+    for (const title of clubNames.slice(0, 3 + Math.floor(Math.random() * 4))) {
+      const club = await prisma.club.create({
+        data: {
+          title,
+          tournament: { connect: { id: t.id } },
+        },
+      });
+      clubs.push(club);
+    }
+  }
 
-  // Бойцы
-  const fighter1 = await prisma.fighter.create({
-    data: {
-      categoryId: category1.id,
-      order: 1,
-      name: 'Иван Иванов',
-      birthday: new Date('2000-05-15'),
-    },
-  });
+  const categories: {
+    id: string;
+    tournamentId: string | null;
+    age: string;
+    weight: string;
+  }[] = [];
 
-  const fighter2 = await prisma.fighter.create({
-    data: {
-      categoryId: category1.id,
-      order: 2,
-      name: 'Петр Петров',
-      birthday: new Date('2001-08-20'),
-    },
-  });
+  for (const t of tournaments) {
+    const ages = ['18-25', '26-35'];
+    const weights = ['61.2', '70.3', '77.1', '83.9'];
 
-  const fighter3 = await prisma.fighter.create({
-    data: {
-      categoryId: category1.id,
-      order: 3,
-      name: 'Сергей Сергеев',
-      birthday: new Date('1999-12-10'),
-    },
-  });
+    for (const age of ages) {
+      for (const weight of weights) {
+        const cat = await prisma.category.create({
+          data: {
+            tournament: { connect: { id: t.id } },
+            age,
+            weight,
+          },
+        });
+        categories.push(cat);
+      }
+    }
+  }
 
-  const fighter4 = await prisma.fighter.create({
-    data: {
-      categoryId: category1.id,
-      order: 4,
-      name: 'Алексей Алексеев',
-      birthday: new Date('2000-03-25'),
-    },
-  });
+  const fighterNames = [
+    'Александр Волков',
+    'Ислам Махачев',
+    'Пётр Ян',
+    'Джон Джонс',
+    'Конор Макгрегор',
+    'Хабиб Нурмагомедов',
+    'Шон Стрикленд',
+    'Камзат Чимаев',
+    'Илия Топурия',
+    'Макс Холлоуэй',
+    'Дастин Порье',
+    'Чарльз Оливейра',
+  ];
 
-  const fighter5 = await prisma.fighter.create({
-    data: {
-      categoryId: category2.id,
-      order: 1,
-      name: 'Дмитрий Дмитриев',
-      birthday: new Date('1998-07-12'),
-    },
-  });
+  const fighters: {
+    id: number;
+    categoryId: string | null;
+    tournamentId: string | null;
+  }[] = [];
 
-  const fighter6 = await prisma.fighter.create({
-    data: {
-      categoryId: category2.id,
-      order: 2,
-      name: 'Андрей Андреев',
-      birthday: new Date('1999-11-30'),
-    },
-  });
+  for (const cat of categories) {
+    const tClubs = clubs.filter(c => c.tournamentId === cat.tournamentId);
+    const num = 4;
+    const shuffled = [...fighterNames].sort(() => Math.random() - 0.5);
+    const selected = shuffled.slice(0, num);
 
-  // Бои
-  await prisma.match.createMany({
-    data: [
-      {
-        categoryId: category1.id,
-        round: 1,
-        number: 1,
-        fighter1Id: fighter1.id,
-        fighter2Id: fighter2.id,
-        winner: fighter1.id,
-      },
-      {
-        categoryId: category1.id,
-        round: 1,
-        number: 2,
-        fighter1Id: fighter3.id,
-        fighter2Id: fighter4.id,
-        winner: fighter3.id,
-      },
-      {
-        categoryId: category1.id,
-        round: 2,
-        number: 1,
-        fighter1Id: fighter1.id,
-        fighter2Id: fighter3.id,
-        winner: null,
-      },
-      {
-        categoryId: category2.id,
-        round: 1,
-        number: 1,
-        fighter1Id: fighter5.id,
-        fighter2Id: fighter6.id,
-        winner: null,
-      },
-    ],
-  });
+    for (let i = 0; i < selected.length; i++) {
+      const club = tClubs[Math.floor(Math.random() * tClubs.length)];
 
-  console.log('База данных заполнена тестовыми данными');
+      const fighter = await prisma.fighter.create({
+        data: {
+          tournament: { connect: { id: cat.tournamentId! } },
+          category: { connect: { id: cat.id } },
+          club: club ? { connect: { id: club.id } } : undefined,
+          order: i + 1,
+          name: selected[i],
+          weight: parseFloat(cat.weight) - 2 + Math.random() * 4,
+          birthday: new Date(1990 + Math.floor(Math.random() * 10), 0, 1),
+        },
+      });
+      fighters.push(fighter);
+    }
+  }
+
+  const allMatches: Omit<Match, 'id'>[] = [];
+
+  for (const cat of categories) {
+    const f = fighters.filter(x => x.categoryId === cat.id);
+    for (let i = 0; i < f.length; i += 2) {
+      if (i + 1 < f.length) {
+        allMatches.push({
+          tournamentId: cat.tournamentId!,
+          categoryId: cat.id,
+          round: 1,
+          number: i / 2 + 1,
+          fighter1Id: f[i].id,
+          fighter2Id: f[i + 1].id,
+          winner: Math.random() > 0.5 ? f[i].id : f[i + 1].id,
+        });
+      }
+    }
+  }
+
+  await prisma.match.createMany({ data: allMatches });
+
+  console.log('Турниров:', tournaments.length);
+  console.log('Клубов:', clubs.length);
+  console.log('Категорий:', categories.length);
+  console.log('Бойцов:', fighters.length);
+  console.log('Матчей:', allMatches.length);
+  console.log('Готово!');
 }
 
 main()

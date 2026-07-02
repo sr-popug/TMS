@@ -7,7 +7,7 @@ export default function FormattedDate({
   tournament: Tournament;
 }) {
   return (
-    <span className=''>
+    <span className='text-nowrap'>
       {tournament.startDate.getMonth() == tournament.endDate?.getMonth()
         ? tournament.startDate.getDay()
         : getDate(tournament.startDate).split(' ').slice(0, 2).join(' ')}
