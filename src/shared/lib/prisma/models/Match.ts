@@ -32,6 +32,8 @@ export type MatchAvgAggregateOutputType = {
   fighter1Id: number | null
   fighter2Id: number | null
   winner: number | null
+  tatami: number | null
+  slotNumber: number | null
 }
 
 export type MatchSumAggregateOutputType = {
@@ -40,6 +42,8 @@ export type MatchSumAggregateOutputType = {
   fighter1Id: number | null
   fighter2Id: number | null
   winner: number | null
+  tatami: number | null
+  slotNumber: number | null
 }
 
 export type MatchMinAggregateOutputType = {
@@ -51,6 +55,8 @@ export type MatchMinAggregateOutputType = {
   fighter1Id: number | null
   fighter2Id: number | null
   winner: number | null
+  tatami: number | null
+  slotNumber: number | null
 }
 
 export type MatchMaxAggregateOutputType = {
@@ -62,6 +68,8 @@ export type MatchMaxAggregateOutputType = {
   fighter1Id: number | null
   fighter2Id: number | null
   winner: number | null
+  tatami: number | null
+  slotNumber: number | null
 }
 
 export type MatchCountAggregateOutputType = {
@@ -73,6 +81,8 @@ export type MatchCountAggregateOutputType = {
   fighter1Id: number
   fighter2Id: number
   winner: number
+  tatami: number
+  slotNumber: number
   _all: number
 }
 
@@ -83,6 +93,8 @@ export type MatchAvgAggregateInputType = {
   fighter1Id?: true
   fighter2Id?: true
   winner?: true
+  tatami?: true
+  slotNumber?: true
 }
 
 export type MatchSumAggregateInputType = {
@@ -91,6 +103,8 @@ export type MatchSumAggregateInputType = {
   fighter1Id?: true
   fighter2Id?: true
   winner?: true
+  tatami?: true
+  slotNumber?: true
 }
 
 export type MatchMinAggregateInputType = {
@@ -102,6 +116,8 @@ export type MatchMinAggregateInputType = {
   fighter1Id?: true
   fighter2Id?: true
   winner?: true
+  tatami?: true
+  slotNumber?: true
 }
 
 export type MatchMaxAggregateInputType = {
@@ -113,6 +129,8 @@ export type MatchMaxAggregateInputType = {
   fighter1Id?: true
   fighter2Id?: true
   winner?: true
+  tatami?: true
+  slotNumber?: true
 }
 
 export type MatchCountAggregateInputType = {
@@ -124,6 +142,8 @@ export type MatchCountAggregateInputType = {
   fighter1Id?: true
   fighter2Id?: true
   winner?: true
+  tatami?: true
+  slotNumber?: true
   _all?: true
 }
 
@@ -222,6 +242,8 @@ export type MatchGroupByOutputType = {
   fighter1Id: number | null
   fighter2Id: number | null
   winner: number | null
+  tatami: number | null
+  slotNumber: number | null
   _count: MatchCountAggregateOutputType | null
   _avg: MatchAvgAggregateOutputType | null
   _sum: MatchSumAggregateOutputType | null
@@ -256,6 +278,8 @@ export type MatchWhereInput = {
   fighter1Id?: Prisma.IntNullableFilter<"Match"> | number | null
   fighter2Id?: Prisma.IntNullableFilter<"Match"> | number | null
   winner?: Prisma.IntNullableFilter<"Match"> | number | null
+  tatami?: Prisma.IntNullableFilter<"Match"> | number | null
+  slotNumber?: Prisma.IntNullableFilter<"Match"> | number | null
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   tournament?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
   fighter1?: Prisma.XOR<Prisma.FighterNullableScalarRelationFilter, Prisma.FighterWhereInput> | null
@@ -271,6 +295,8 @@ export type MatchOrderByWithRelationInput = {
   fighter1Id?: Prisma.SortOrderInput | Prisma.SortOrder
   fighter2Id?: Prisma.SortOrderInput | Prisma.SortOrder
   winner?: Prisma.SortOrderInput | Prisma.SortOrder
+  tatami?: Prisma.SortOrderInput | Prisma.SortOrder
+  slotNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   category?: Prisma.CategoryOrderByWithRelationInput
   tournament?: Prisma.TournamentOrderByWithRelationInput
   fighter1?: Prisma.FighterOrderByWithRelationInput
@@ -289,6 +315,8 @@ export type MatchWhereUniqueInput = Prisma.AtLeast<{
   fighter1Id?: Prisma.IntNullableFilter<"Match"> | number | null
   fighter2Id?: Prisma.IntNullableFilter<"Match"> | number | null
   winner?: Prisma.IntNullableFilter<"Match"> | number | null
+  tatami?: Prisma.IntNullableFilter<"Match"> | number | null
+  slotNumber?: Prisma.IntNullableFilter<"Match"> | number | null
   category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   tournament?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
   fighter1?: Prisma.XOR<Prisma.FighterNullableScalarRelationFilter, Prisma.FighterWhereInput> | null
@@ -304,6 +332,8 @@ export type MatchOrderByWithAggregationInput = {
   fighter1Id?: Prisma.SortOrderInput | Prisma.SortOrder
   fighter2Id?: Prisma.SortOrderInput | Prisma.SortOrder
   winner?: Prisma.SortOrderInput | Prisma.SortOrder
+  tatami?: Prisma.SortOrderInput | Prisma.SortOrder
+  slotNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.MatchCountOrderByAggregateInput
   _avg?: Prisma.MatchAvgOrderByAggregateInput
   _max?: Prisma.MatchMaxOrderByAggregateInput
@@ -323,6 +353,8 @@ export type MatchScalarWhereWithAggregatesInput = {
   fighter1Id?: Prisma.IntNullableWithAggregatesFilter<"Match"> | number | null
   fighter2Id?: Prisma.IntNullableWithAggregatesFilter<"Match"> | number | null
   winner?: Prisma.IntNullableWithAggregatesFilter<"Match"> | number | null
+  tatami?: Prisma.IntNullableWithAggregatesFilter<"Match"> | number | null
+  slotNumber?: Prisma.IntNullableWithAggregatesFilter<"Match"> | number | null
 }
 
 export type MatchCreateInput = {
@@ -330,6 +362,8 @@ export type MatchCreateInput = {
   round: number
   number: number
   winner?: number | null
+  tatami?: number | null
+  slotNumber?: number | null
   category?: Prisma.CategoryCreateNestedOneWithoutMatchesInput
   tournament?: Prisma.TournamentCreateNestedOneWithoutMatchesInput
   fighter1?: Prisma.FighterCreateNestedOneWithoutMatchesAsFighter1Input
@@ -345,6 +379,8 @@ export type MatchUncheckedCreateInput = {
   fighter1Id?: number | null
   fighter2Id?: number | null
   winner?: number | null
+  tatami?: number | null
+  slotNumber?: number | null
 }
 
 export type MatchUpdateInput = {
@@ -352,6 +388,8 @@ export type MatchUpdateInput = {
   round?: Prisma.IntFieldUpdateOperationsInput | number
   number?: Prisma.IntFieldUpdateOperationsInput | number
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tatami?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  slotNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   category?: Prisma.CategoryUpdateOneWithoutMatchesNestedInput
   tournament?: Prisma.TournamentUpdateOneWithoutMatchesNestedInput
   fighter1?: Prisma.FighterUpdateOneWithoutMatchesAsFighter1NestedInput
@@ -367,6 +405,8 @@ export type MatchUncheckedUpdateInput = {
   fighter1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fighter2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tatami?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  slotNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MatchCreateManyInput = {
@@ -378,6 +418,8 @@ export type MatchCreateManyInput = {
   fighter1Id?: number | null
   fighter2Id?: number | null
   winner?: number | null
+  tatami?: number | null
+  slotNumber?: number | null
 }
 
 export type MatchUpdateManyMutationInput = {
@@ -385,6 +427,8 @@ export type MatchUpdateManyMutationInput = {
   round?: Prisma.IntFieldUpdateOperationsInput | number
   number?: Prisma.IntFieldUpdateOperationsInput | number
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tatami?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  slotNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MatchUncheckedUpdateManyInput = {
@@ -396,6 +440,8 @@ export type MatchUncheckedUpdateManyInput = {
   fighter1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fighter2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tatami?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  slotNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MatchListRelationFilter = {
@@ -417,6 +463,8 @@ export type MatchCountOrderByAggregateInput = {
   fighter1Id?: Prisma.SortOrder
   fighter2Id?: Prisma.SortOrder
   winner?: Prisma.SortOrder
+  tatami?: Prisma.SortOrder
+  slotNumber?: Prisma.SortOrder
 }
 
 export type MatchAvgOrderByAggregateInput = {
@@ -425,6 +473,8 @@ export type MatchAvgOrderByAggregateInput = {
   fighter1Id?: Prisma.SortOrder
   fighter2Id?: Prisma.SortOrder
   winner?: Prisma.SortOrder
+  tatami?: Prisma.SortOrder
+  slotNumber?: Prisma.SortOrder
 }
 
 export type MatchMaxOrderByAggregateInput = {
@@ -436,6 +486,8 @@ export type MatchMaxOrderByAggregateInput = {
   fighter1Id?: Prisma.SortOrder
   fighter2Id?: Prisma.SortOrder
   winner?: Prisma.SortOrder
+  tatami?: Prisma.SortOrder
+  slotNumber?: Prisma.SortOrder
 }
 
 export type MatchMinOrderByAggregateInput = {
@@ -447,6 +499,8 @@ export type MatchMinOrderByAggregateInput = {
   fighter1Id?: Prisma.SortOrder
   fighter2Id?: Prisma.SortOrder
   winner?: Prisma.SortOrder
+  tatami?: Prisma.SortOrder
+  slotNumber?: Prisma.SortOrder
 }
 
 export type MatchSumOrderByAggregateInput = {
@@ -455,6 +509,8 @@ export type MatchSumOrderByAggregateInput = {
   fighter1Id?: Prisma.SortOrder
   fighter2Id?: Prisma.SortOrder
   winner?: Prisma.SortOrder
+  tatami?: Prisma.SortOrder
+  slotNumber?: Prisma.SortOrder
 }
 
 export type MatchCreateNestedManyWithoutTournamentInput = {
@@ -638,6 +694,8 @@ export type MatchCreateWithoutTournamentInput = {
   round: number
   number: number
   winner?: number | null
+  tatami?: number | null
+  slotNumber?: number | null
   category?: Prisma.CategoryCreateNestedOneWithoutMatchesInput
   fighter1?: Prisma.FighterCreateNestedOneWithoutMatchesAsFighter1Input
   fighter2?: Prisma.FighterCreateNestedOneWithoutMatchesAsFighter2Input
@@ -651,6 +709,8 @@ export type MatchUncheckedCreateWithoutTournamentInput = {
   fighter1Id?: number | null
   fighter2Id?: number | null
   winner?: number | null
+  tatami?: number | null
+  slotNumber?: number | null
 }
 
 export type MatchCreateOrConnectWithoutTournamentInput = {
@@ -691,6 +751,8 @@ export type MatchScalarWhereInput = {
   fighter1Id?: Prisma.IntNullableFilter<"Match"> | number | null
   fighter2Id?: Prisma.IntNullableFilter<"Match"> | number | null
   winner?: Prisma.IntNullableFilter<"Match"> | number | null
+  tatami?: Prisma.IntNullableFilter<"Match"> | number | null
+  slotNumber?: Prisma.IntNullableFilter<"Match"> | number | null
 }
 
 export type MatchCreateWithoutCategoryInput = {
@@ -698,6 +760,8 @@ export type MatchCreateWithoutCategoryInput = {
   round: number
   number: number
   winner?: number | null
+  tatami?: number | null
+  slotNumber?: number | null
   tournament?: Prisma.TournamentCreateNestedOneWithoutMatchesInput
   fighter1?: Prisma.FighterCreateNestedOneWithoutMatchesAsFighter1Input
   fighter2?: Prisma.FighterCreateNestedOneWithoutMatchesAsFighter2Input
@@ -711,6 +775,8 @@ export type MatchUncheckedCreateWithoutCategoryInput = {
   fighter1Id?: number | null
   fighter2Id?: number | null
   winner?: number | null
+  tatami?: number | null
+  slotNumber?: number | null
 }
 
 export type MatchCreateOrConnectWithoutCategoryInput = {
@@ -744,6 +810,8 @@ export type MatchCreateWithoutFighter1Input = {
   round: number
   number: number
   winner?: number | null
+  tatami?: number | null
+  slotNumber?: number | null
   category?: Prisma.CategoryCreateNestedOneWithoutMatchesInput
   tournament?: Prisma.TournamentCreateNestedOneWithoutMatchesInput
   fighter2?: Prisma.FighterCreateNestedOneWithoutMatchesAsFighter2Input
@@ -757,6 +825,8 @@ export type MatchUncheckedCreateWithoutFighter1Input = {
   number: number
   fighter2Id?: number | null
   winner?: number | null
+  tatami?: number | null
+  slotNumber?: number | null
 }
 
 export type MatchCreateOrConnectWithoutFighter1Input = {
@@ -774,6 +844,8 @@ export type MatchCreateWithoutFighter2Input = {
   round: number
   number: number
   winner?: number | null
+  tatami?: number | null
+  slotNumber?: number | null
   category?: Prisma.CategoryCreateNestedOneWithoutMatchesInput
   tournament?: Prisma.TournamentCreateNestedOneWithoutMatchesInput
   fighter1?: Prisma.FighterCreateNestedOneWithoutMatchesAsFighter1Input
@@ -787,6 +859,8 @@ export type MatchUncheckedCreateWithoutFighter2Input = {
   number: number
   fighter1Id?: number | null
   winner?: number | null
+  tatami?: number | null
+  slotNumber?: number | null
 }
 
 export type MatchCreateOrConnectWithoutFighter2Input = {
@@ -839,6 +913,8 @@ export type MatchCreateManyTournamentInput = {
   fighter1Id?: number | null
   fighter2Id?: number | null
   winner?: number | null
+  tatami?: number | null
+  slotNumber?: number | null
 }
 
 export type MatchUpdateWithoutTournamentInput = {
@@ -846,6 +922,8 @@ export type MatchUpdateWithoutTournamentInput = {
   round?: Prisma.IntFieldUpdateOperationsInput | number
   number?: Prisma.IntFieldUpdateOperationsInput | number
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tatami?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  slotNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   category?: Prisma.CategoryUpdateOneWithoutMatchesNestedInput
   fighter1?: Prisma.FighterUpdateOneWithoutMatchesAsFighter1NestedInput
   fighter2?: Prisma.FighterUpdateOneWithoutMatchesAsFighter2NestedInput
@@ -859,6 +937,8 @@ export type MatchUncheckedUpdateWithoutTournamentInput = {
   fighter1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fighter2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tatami?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  slotNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MatchUncheckedUpdateManyWithoutTournamentInput = {
@@ -869,6 +949,8 @@ export type MatchUncheckedUpdateManyWithoutTournamentInput = {
   fighter1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fighter2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tatami?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  slotNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MatchCreateManyCategoryInput = {
@@ -879,6 +961,8 @@ export type MatchCreateManyCategoryInput = {
   fighter1Id?: number | null
   fighter2Id?: number | null
   winner?: number | null
+  tatami?: number | null
+  slotNumber?: number | null
 }
 
 export type MatchUpdateWithoutCategoryInput = {
@@ -886,6 +970,8 @@ export type MatchUpdateWithoutCategoryInput = {
   round?: Prisma.IntFieldUpdateOperationsInput | number
   number?: Prisma.IntFieldUpdateOperationsInput | number
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tatami?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  slotNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   tournament?: Prisma.TournamentUpdateOneWithoutMatchesNestedInput
   fighter1?: Prisma.FighterUpdateOneWithoutMatchesAsFighter1NestedInput
   fighter2?: Prisma.FighterUpdateOneWithoutMatchesAsFighter2NestedInput
@@ -899,6 +985,8 @@ export type MatchUncheckedUpdateWithoutCategoryInput = {
   fighter1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fighter2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tatami?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  slotNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MatchUncheckedUpdateManyWithoutCategoryInput = {
@@ -909,6 +997,8 @@ export type MatchUncheckedUpdateManyWithoutCategoryInput = {
   fighter1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fighter2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tatami?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  slotNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MatchCreateManyFighter1Input = {
@@ -919,6 +1009,8 @@ export type MatchCreateManyFighter1Input = {
   number: number
   fighter2Id?: number | null
   winner?: number | null
+  tatami?: number | null
+  slotNumber?: number | null
 }
 
 export type MatchCreateManyFighter2Input = {
@@ -929,6 +1021,8 @@ export type MatchCreateManyFighter2Input = {
   number: number
   fighter1Id?: number | null
   winner?: number | null
+  tatami?: number | null
+  slotNumber?: number | null
 }
 
 export type MatchUpdateWithoutFighter1Input = {
@@ -936,6 +1030,8 @@ export type MatchUpdateWithoutFighter1Input = {
   round?: Prisma.IntFieldUpdateOperationsInput | number
   number?: Prisma.IntFieldUpdateOperationsInput | number
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tatami?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  slotNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   category?: Prisma.CategoryUpdateOneWithoutMatchesNestedInput
   tournament?: Prisma.TournamentUpdateOneWithoutMatchesNestedInput
   fighter2?: Prisma.FighterUpdateOneWithoutMatchesAsFighter2NestedInput
@@ -949,6 +1045,8 @@ export type MatchUncheckedUpdateWithoutFighter1Input = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   fighter2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tatami?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  slotNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MatchUncheckedUpdateManyWithoutFighter1Input = {
@@ -959,6 +1057,8 @@ export type MatchUncheckedUpdateManyWithoutFighter1Input = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   fighter2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tatami?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  slotNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MatchUpdateWithoutFighter2Input = {
@@ -966,6 +1066,8 @@ export type MatchUpdateWithoutFighter2Input = {
   round?: Prisma.IntFieldUpdateOperationsInput | number
   number?: Prisma.IntFieldUpdateOperationsInput | number
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tatami?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  slotNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   category?: Prisma.CategoryUpdateOneWithoutMatchesNestedInput
   tournament?: Prisma.TournamentUpdateOneWithoutMatchesNestedInput
   fighter1?: Prisma.FighterUpdateOneWithoutMatchesAsFighter1NestedInput
@@ -979,6 +1081,8 @@ export type MatchUncheckedUpdateWithoutFighter2Input = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   fighter1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tatami?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  slotNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type MatchUncheckedUpdateManyWithoutFighter2Input = {
@@ -989,6 +1093,8 @@ export type MatchUncheckedUpdateManyWithoutFighter2Input = {
   number?: Prisma.IntFieldUpdateOperationsInput | number
   fighter1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   winner?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tatami?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  slotNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -1002,6 +1108,8 @@ export type MatchSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   fighter1Id?: boolean
   fighter2Id?: boolean
   winner?: boolean
+  tatami?: boolean
+  slotNumber?: boolean
   category?: boolean | Prisma.Match$categoryArgs<ExtArgs>
   tournament?: boolean | Prisma.Match$tournamentArgs<ExtArgs>
   fighter1?: boolean | Prisma.Match$fighter1Args<ExtArgs>
@@ -1017,6 +1125,8 @@ export type MatchSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   fighter1Id?: boolean
   fighter2Id?: boolean
   winner?: boolean
+  tatami?: boolean
+  slotNumber?: boolean
   category?: boolean | Prisma.Match$categoryArgs<ExtArgs>
   tournament?: boolean | Prisma.Match$tournamentArgs<ExtArgs>
   fighter1?: boolean | Prisma.Match$fighter1Args<ExtArgs>
@@ -1032,6 +1142,8 @@ export type MatchSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   fighter1Id?: boolean
   fighter2Id?: boolean
   winner?: boolean
+  tatami?: boolean
+  slotNumber?: boolean
   category?: boolean | Prisma.Match$categoryArgs<ExtArgs>
   tournament?: boolean | Prisma.Match$tournamentArgs<ExtArgs>
   fighter1?: boolean | Prisma.Match$fighter1Args<ExtArgs>
@@ -1047,9 +1159,11 @@ export type MatchSelectScalar = {
   fighter1Id?: boolean
   fighter2Id?: boolean
   winner?: boolean
+  tatami?: boolean
+  slotNumber?: boolean
 }
 
-export type MatchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "categoryId" | "tournamentId" | "round" | "number" | "fighter1Id" | "fighter2Id" | "winner", ExtArgs["result"]["match"]>
+export type MatchOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "categoryId" | "tournamentId" | "round" | "number" | "fighter1Id" | "fighter2Id" | "winner" | "tatami" | "slotNumber", ExtArgs["result"]["match"]>
 export type MatchInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.Match$categoryArgs<ExtArgs>
   tournament?: boolean | Prisma.Match$tournamentArgs<ExtArgs>
@@ -1086,6 +1200,8 @@ export type $MatchPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     fighter1Id: number | null
     fighter2Id: number | null
     winner: number | null
+    tatami: number | null
+    slotNumber: number | null
   }, ExtArgs["result"]["match"]>
   composites: {}
 }
@@ -1521,6 +1637,8 @@ export interface MatchFieldRefs {
   readonly fighter1Id: Prisma.FieldRef<"Match", 'Int'>
   readonly fighter2Id: Prisma.FieldRef<"Match", 'Int'>
   readonly winner: Prisma.FieldRef<"Match", 'Int'>
+  readonly tatami: Prisma.FieldRef<"Match", 'Int'>
+  readonly slotNumber: Prisma.FieldRef<"Match", 'Int'>
 }
     
 

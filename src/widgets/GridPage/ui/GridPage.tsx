@@ -2,9 +2,9 @@
 import { getGridMatches } from '@/entities/match';
 import { Button } from '@/shared/ui/button';
 import { ArrowLeft, Swords } from 'lucide-react';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+import { useRouter } from 'next/navigation';
 import GridTree from './GridTree';
 
 interface FighterInfo {
@@ -34,6 +34,7 @@ export default function GridPage({
 }) {
   const [matches, setMatches] = useState<MatchInfo[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     let ignore = false;
@@ -60,11 +61,9 @@ export default function GridPage({
   return (
     <div className='space-y-6'>
       <div className='flex items-center gap-4'>
-        <Link href={`/admin/tournaments/${tournamentId}/grids`}>
-          <Button variant='ghost' size='sm'>
-            <ArrowLeft className='h-4 w-4 mr-1' /> Назад
-          </Button>
-        </Link>
+        <Button variant='ghost' size='sm' onClick={() => router.back()}>
+          <ArrowLeft className='h-4 w-4 mr-1' /> Назад
+        </Button>
       </div>
 
       <GridTree matches={matches} />

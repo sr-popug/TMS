@@ -13,6 +13,7 @@ export default async function page({
   return (
     <article>
       <h2 className='font-bold text-xl mb-2'>Сетка {label}</h2>
+
       <GridPage tournamentId={id} categoryId={gridId} />
     </article>
   );

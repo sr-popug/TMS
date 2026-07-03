@@ -39,7 +39,7 @@ model Club {
   id    Int    @id @default(autoincrement())
   title String
 
-  tournament   Tournament? @relation(fields: [tournamentId], references: [id])
+  tournament   Tournament? @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
   tournamentId String?
 
   fighters Fighter[]
@@ -77,6 +77,8 @@ model Match {
   fighter2     Fighter?    @relation("Fighter2Matches", fields: [fighter2Id], references: [id])
   fighter2Id   Int?
   winner       Int?
+  tatami       Int?        
+  slotNumber   Int?
 }
 
 model Fighter {
@@ -89,7 +91,6 @@ model Fighter {
   name         String
   birthday     DateTime
   weight       Float
-
   club   Club? @relation(fields: [clubId], references: [id])
   clubId Int?
 

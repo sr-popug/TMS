@@ -136,7 +136,9 @@ export const MatchScalarFieldEnum = {
   number: 'number',
   fighter1Id: 'fighter1Id',
   fighter2Id: 'fighter2Id',
-  winner: 'winner'
+  winner: 'winner',
+  tatami: 'tatami',
+  slotNumber: 'slotNumber'
 } as const
 
 export type MatchScalarFieldEnum = (typeof MatchScalarFieldEnum)[keyof typeof MatchScalarFieldEnum]

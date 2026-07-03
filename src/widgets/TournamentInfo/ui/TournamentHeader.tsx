@@ -28,7 +28,7 @@ const getLinks = (id: string, isAdmin: boolean) => {
     },
     {
       title: 'Поединки',
-      href: `${prefix}/tournaments/${id}/fights`,
+      href: `${prefix}/tournaments/${id}/matches`,
     },
   ];
   if (isAdmin) {
