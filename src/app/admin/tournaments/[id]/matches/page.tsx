@@ -11,7 +11,7 @@ export default async function MatchesPage({
 }) {
   const { id } = await params;
 
-  // 🎯 Вытягиваем все матчи этого турнира со всеми нужными связями
+  // 🎯 Вытягиваем все матчи этого турнира со ВСЕМИ связями, которые требует FighterWithRelations
   const matches = await prisma.match.findMany({
     where: {
       tournamentId: id,
@@ -19,21 +19,26 @@ export default async function MatchesPage({
     include: {
       category: true,
       fighter1: {
-        include: { club: true },
+        include: {
+          club: true,
+          category: true, // 👈 ДОБАВИЛИ СЮДА
+        },
       },
       fighter2: {
-        include: { club: true },
+        include: {
+          club: true,
+          category: true, // 👈 И СЮДА ТОЖЕ
+        },
       },
     },
-    // Опционально: можно сразу отсортировать по коврам и слотам, если они уже есть
     orderBy: [{ tatami: 'asc' }, { slotNumber: 'asc' }],
   });
 
   return (
     <article>
       <h2 className='font-bold text-xl mb-2 '>Поединки</h2>
-      {/* 🎯 Передаем реальные матчи вместо пустого массива */}
-      <MatchList tournamentId={id} initialMatches={matches || []} />
+      {/* Теперь структуры данных идеально совпадают! */}
+      <MatchList tournamentId={id} initialMatches={matches} />
     </article>
   );
 }

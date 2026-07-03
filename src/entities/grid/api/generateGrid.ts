@@ -25,6 +25,7 @@ export const generateGrid = async (categoryId: string) => {
     });
   }
 
+  // Сценарий 1: 1 боец
   if (count === 1) {
     await prisma.match.create({
       data: {
@@ -35,10 +36,14 @@ export const generateGrid = async (categoryId: string) => {
         fighter1Id: fighters[0].id,
         fighter2Id: null,
         winner: fighters[0].id,
+        tatami: null, // 🎯 Добавлено
+        slotNumber: null, // 🎯 Добавлено
       },
     });
     return;
   }
+
+  // Сценарий 2: 2 бойца
   if (count === 2) {
     await prisma.match.create({
       data: {
@@ -49,38 +54,48 @@ export const generateGrid = async (categoryId: string) => {
         fighter1Id: fighters[0].id,
         fighter2Id: fighters[1].id,
         winner: null,
+        tatami: null, // 🎯 Добавлено
+        slotNumber: null, // 🎯 Добавлено
       },
     });
     return;
   }
+
+  // Сценарий 3: 3 бойца (Круговая / туры)
   if (count === 3) {
     const matchesToCreate: Omit<Match, 'id'>[] = [
       {
         categoryId,
         tournamentId: category.tournamentId,
-        round: 1, // Тур 1
+        round: 1,
         number: 1,
         fighter1Id: fighters[0].id,
         fighter2Id: fighters[1].id,
         winner: null,
+        tatami: null, // 🎯 Добавлено
+        slotNumber: null, // 🎯 Добавлено
       },
       {
         categoryId,
         tournamentId: category.tournamentId,
-        round: 1, // Тур 2
+        round: 1,
         number: 2,
         fighter1Id: fighters[1].id,
         fighter2Id: fighters[2].id,
         winner: null,
+        tatami: null, // 🎯 Добавлено
+        slotNumber: null, // 🎯 Добавлено
       },
       {
         categoryId,
         tournamentId: category.tournamentId,
-        round: 1, // Тур 3
+        round: 1,
         number: 3,
         fighter1Id: fighters[0].id,
         fighter2Id: fighters[2].id,
         winner: null,
+        tatami: null, // 🎯 Добавлено
+        slotNumber: null, // 🎯 Добавлено
       },
     ];
 
@@ -88,6 +103,7 @@ export const generateGrid = async (categoryId: string) => {
     return;
   }
 
+  // Сценарий 4: 4+ бойцов (Олимпийская система с "вылетами" и "пропусками" - bye)
   const totalSlots = Math.pow(2, Math.ceil(Math.log2(count)));
   const totalRounds = Math.log2(totalSlots);
 
@@ -99,7 +115,7 @@ export const generateGrid = async (categoryId: string) => {
 
   const matchesToCreate: Omit<Match, 'id'>[] = [];
 
-  // 1 раунд
+  // Раунд 1
   for (let i = 0; i < matchesInFirstRound; i++) {
     matchesToCreate.push({
       categoryId,
@@ -109,9 +125,12 @@ export const generateGrid = async (categoryId: string) => {
       fighter1Id: firstRoundFighters[i * 2].id,
       fighter2Id: firstRoundFighters[i * 2 + 1].id,
       winner: null,
+      tatami: null, // 🎯 Добавлено
+      slotNumber: null, // 🎯 Добавлено
     });
   }
-  // 2 раунд
+
+  // Раунд 2
   const round2MatchesCount = totalSlots / 4;
   let byeIdx = 0;
 
@@ -133,9 +152,12 @@ export const generateGrid = async (categoryId: string) => {
       fighter1Id,
       fighter2Id,
       winner: null,
+      tatami: null, // 🎯 Добавлено
+      slotNumber: null, // 🎯 Добавлено
     });
   }
-  // 3 раунд и далее
+
+  // Раунд 3 и далее
   let currentRoundMatchesCount = round2MatchesCount;
   for (let round = 3; round <= totalRounds; round++) {
     currentRoundMatchesCount = currentRoundMatchesCount / 2;
@@ -149,6 +171,8 @@ export const generateGrid = async (categoryId: string) => {
         fighter1Id: null,
         fighter2Id: null,
         winner: null,
+        tatami: null, // 🎯 Добавлено
+        slotNumber: null, // 🎯 Добавлено
       });
     }
   }
