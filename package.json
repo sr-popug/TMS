@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "server-build": "npx prisma generate && next build",
-    "prisma": "npx prisma migrate reset && npx prisma db push && npx prisma db push && npx prisma db seed"
+    "prisma": "npx prisma migrate reset && npx prisma db push && npx prisma db seed"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",

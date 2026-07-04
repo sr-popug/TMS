@@ -2,17 +2,7 @@
 
 import { prisma } from '@/shared/config';
 import { revalidatePath } from 'next/cache';
-
-async function getMatchesWithCategory(tournamentId: string) {
-  return await prisma.match.findMany({
-    where: { tournamentId },
-    include: { category: true },
-  });
-}
-
-type MatchWithCategory = Awaited<
-  ReturnType<typeof getMatchesWithCategory>
->[number];
+import { getMatchesWithCategory } from './getMatchesWithCategory';
 
 export const scheduleMatches = async (
   tournamentId: string,
@@ -31,9 +21,13 @@ export const scheduleMatches = async (
     // 2. Получаем матчи
     const matches = await getMatchesWithCategory(tournamentId);
     if (matches.length === 0) return;
-
+    const filteredMatches = matches.filter(el => {
+      if (el.category?.fighters.length && el.category?.fighters.length > 1) {
+        return el;
+      }
+    });
     // 3. СОРТИРОВКА ПО ЖЕСТКОЙ ИЕРАРХИИ: РАУНД -> ВОЗРАСТ -> ВЕС
-    const sortedMatches = [...matches].sort((a, b) => {
+    const sortedMatches = [...filteredMatches].sort((a, b) => {
       // ПРИОРИТЕТ 1: По раундам (Сначала весь Раунд 1, затем Раунд 2 и т.д.)
       if (a.round !== b.round) return a.round - b.round;
 
