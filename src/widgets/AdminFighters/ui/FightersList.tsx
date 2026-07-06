@@ -1,7 +1,7 @@
 'use client';
 import { getCategories } from '@/entities/category';
 import { deleteFighter, getAllFighters } from '@/entities/fighter';
-import { Category } from '@/shared/lib/prisma/client';
+import { Category, Club } from '@/shared/lib/prisma/client';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import {
@@ -43,9 +43,9 @@ export default function FightersList({
   const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [sortField, setSortField] = useState<SortField>('order');
   const [sortAsc, setSortAsc] = useState(true);
-  const [clubs, setClubs] = useState<{ id: number; title: string }[]>([]);
+  const [clubs, setClubs] = useState<Club[]>([]);
   const [categories, setCategories] = useState<
-    { id: string; age: string; weight: string; label: string }[]
+    (Category & { label: string })[]
   >([]);
   const [editingFighter, setEditingFighter] =
     useState<FighterWithRelations | null>(null);
@@ -57,7 +57,7 @@ export default function FightersList({
 
       const uniqueClubs = data
         .filter(f => f.club)
-        .map(f => ({ id: f.club!.id, title: f.club!.title }))
+        .map(f => ({ id: f.club!.id, title: f.club!.title, tournamentId }))
         .filter((c, i, self) => self.findIndex(t => t.id === c.id) === i)
         .sort((a, b) => a.title.localeCompare(b.title));
 
@@ -72,6 +72,7 @@ export default function FightersList({
           age: c.age,
           weight: c.weight,
           label: `${c.age} / ${c.weight} кг`,
+          tournamentId,
         }))
         .filter((c, i, self) => self.findIndex(t => t.id === c.id) === i)
         .sort((a, b) => {
@@ -102,7 +103,7 @@ export default function FightersList({
   const handleEdit = (fighter: FighterWithRelations) => {
     setEditingFighter(fighter);
   };
-  const handleClubCreated = (club: { id: number; title: string }) => {
+  const handleClubCreated = (club: Club) => {
     setClubs(prev =>
       [...prev, club].sort((a, b) => a.title.localeCompare(b.title)),
     );

@@ -1,7 +1,7 @@
 import { MatchWithRelations, setMatchWinner } from '@/entities/match';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { toast } from 'sonner';
 interface Props {
   initialMatches: MatchWithRelations[];
@@ -10,7 +10,9 @@ interface Props {
 }
 export default function Match({ tournamentId, initialMatches, match }: Props) {
   const [isWinnerPending, startWinnerTransition] = useTransition();
+  const [localWinner, setLocalWinner] = useState(match.winner);
   const router = useRouter();
+
   const getRoundLabel = (currentRound: number, categoryId: string | null) => {
     if (!categoryId) return `Раунд ${currentRound}`;
 
@@ -29,17 +31,17 @@ export default function Match({ tournamentId, initialMatches, match }: Props) {
   const handleSelectWinner = (
     matchId: string,
     fighterId: number | undefined,
-    opponentId: number | undefined,
   ) => {
     if (!fighterId) return;
     if (isWinnerPending) return;
-
+    setLocalWinner(fighterId == match.fighter1?.id ? 1 : 2);
     startWinnerTransition(async () => {
       try {
         await setMatchWinner(matchId, fighterId);
         toast.success('Результат сохранен, сетка обновлена!');
         router.refresh();
       } catch (err) {
+        setLocalWinner(match.winner);
         toast.error('Не удалось сохранить победителя');
       }
     });
@@ -60,12 +62,11 @@ export default function Match({ tournamentId, initialMatches, match }: Props) {
 
       <div className='space-y-1.5 text-base font-medium'>
         <div
-          onClick={() =>
-            handleSelectWinner(match.id, match.fighter1?.id, match.fighter2?.id)
-          }
+          onClick={() => handleSelectWinner(match.id, match.fighter1?.id)}
           className={`flex justify-between items-center p-2 rounded cursor-pointer transition-colors
                               ${
-                                match.winner === match.fighter1?.id
+                                match.winner === match.fighter1?.id ||
+                                localWinner == 1
                                   ? 'bg-emerald-500/10 text-emerald-600 font-bold border border-emerald-500/30'
                                   : 'hover:bg-zinc-100 dark:hover:bg-zinc-800 text-foreground'
                               } ${!match.fighter1?.id ? 'opacity-60 cursor-not-allowed' : ''}`}
@@ -81,12 +82,11 @@ export default function Match({ tournamentId, initialMatches, match }: Props) {
         <div className='border-t border-dashed border-muted' />
 
         <div
-          onClick={() =>
-            handleSelectWinner(match.id, match.fighter2?.id, match.fighter1?.id)
-          }
+          onClick={() => handleSelectWinner(match.id, match.fighter2?.id)}
           className={`flex justify-between items-center p-2 rounded cursor-pointer transition-colors
                               ${
-                                match.winner === match.fighter2?.id
+                                match.winner === match.fighter2?.id ||
+                                localWinner == 2
                                   ? 'bg-emerald-500/10 text-emerald-600 font-bold border border-emerald-500/30'
                                   : 'hover:bg-zinc-100 dark:hover:bg-zinc-800 text-foreground'
                               } ${!match.fighter2?.id ? 'opacity-60 cursor-not-allowed' : ''}`}

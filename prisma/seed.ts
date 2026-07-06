@@ -3,6 +3,7 @@ import { prisma } from '@/shared/config';
 async function main() {
   console.log('🚀 Начинаем заполнение базы данных (Seed)...');
 
+  // Очистка БД в правильном порядке (с учетом внешних ключей)
   await prisma.match.deleteMany({});
   await prisma.fighter.deleteMany({});
   await prisma.category.deleteMany({});
@@ -13,20 +14,11 @@ async function main() {
 
   console.log('🧹 Старые данные успешно удалены.');
 
-  // Создаем тестовые клубы
   const clubNames = ['Альфа', 'Титан', 'Спарта', 'Вымпел', 'Легион', 'Самурай'];
+  const ageGroups = ['10-11', '12-13', '14-15', '16-17', '18+'];
 
-  // Создаем базовые категории для турниров
-  const ageGroups = ['10-11 лет', '12-13 лет', '14-15 лет', '16-17 лет'];
-  const weightGroups = [
-    'до 40 кг',
-    'до 50 кг',
-    'до 60 кг',
-    'до 70 кг',
-    '70+ кг',
-  ];
+  const weightGroups = [40, 50, 60, 70, null];
 
-  // Инициализируем 5 турниров относительно 4 июля 2026 года
   const tournamentData = [
     {
       name: 'Зимний кубок Вызова 2026',
@@ -52,7 +44,6 @@ async function main() {
       startDate: new Date('2026-06-10T09:00:00Z'),
       endDate: new Date('2026-06-12T19:00:00Z'),
     },
-    // --- ДАТА СЕГОДНЯ: 4 ИЮЛЯ 2026 ---
     {
       name: 'Осенний Прорыв 2026',
       description: 'Главный осенний старт сезона',
@@ -74,7 +65,6 @@ async function main() {
   for (const t of tournamentData) {
     console.log(`\n📦 Создаем турнир: "${t.name}"`);
 
-    // 1. Создаем турнир
     const tournament = await prisma.tournament.create({
       data: {
         name: t.name,
@@ -86,7 +76,6 @@ async function main() {
       },
     });
 
-    // 2. Создаем клубы, привязанные к этому турниру
     const createdClubs = [];
     for (const clubName of clubNames) {
       const club = await prisma.club.create({
@@ -98,7 +87,6 @@ async function main() {
       createdClubs.push(club);
     }
 
-    // 3. Создаем расписание (TimeRow)
     await prisma.timeRow.createMany({
       data: [
         {
@@ -116,91 +104,135 @@ async function main() {
       ],
     });
 
-    // 4. Создаем категории для этого турнира
+    // Создаем категории. Преобразуем веса в строковый формат для хранения, если поле в схеме строковое
+    // (например: "40", "50", "70+")
     const createdCategories = [];
     for (const age of ageGroups) {
-      for (const weight of weightGroups) {
+      for (const wGroup of weightGroups) {
+        const weightString = wGroup ? String(wGroup) : '70+';
         const cat = await prisma.category.create({
           data: {
             tournamentId: tournament.id,
             age,
-            weight,
+            weight: weightString,
           },
         });
-        createdCategories.push(cat);
+        createdCategories.push({
+          id: cat.id,
+          age,
+          maxWeight: wGroup,
+        });
       }
     }
 
-    // 5. Создаем 20 уникальных участников (Fighters) для этого турнира
-    console.log(`🔹 Генерируем 20 участников для турнира...`);
-    for (let i = 1; i <= 20; i++) {
-      // Случайно распределяем бойца в одну из созданных категорий и клубов
-      const randomCategory =
+    console.log(
+      `🔹 Генерируем участников с плотным распределением (по 9 человек на категорию)...`,
+    );
+
+    // Чтобы в категориях было по 9 человек, мы не берем случайную категорию для каждого бойца.
+    // Вместо этого мы выберем 4 случайные категории на турнир и заполним их "до краев".
+    const targetCategories: {
+      id: string;
+      age: string;
+      maxWeight: number | null;
+    }[] = [];
+    while (targetCategories.length < 4) {
+      const randCat =
         createdCategories[Math.floor(Math.random() * createdCategories.length)];
-      const randomClub =
-        createdClubs[Math.floor(Math.random() * createdClubs.length)];
-
-      const firstName = [
-        'Александр',
-        'Дмитрий',
-        'Максим',
-        'Сергей',
-        'Андрей',
-        'Алексей',
-        'Илья',
-        'Кирилл',
-        'Артем',
-        'Егор',
-      ];
-      const lastName = [
-        'Иванов',
-        'Петров',
-        'Смирнов',
-        'Сергеев',
-        'Волков',
-        'Кузнецов',
-        'Попов',
-        'Васильев',
-        'Соколов',
-        'Новиков',
-      ];
-
-      const fullName = `${lastName[Math.floor(Math.random() * lastName.length)]} ${firstName[Math.floor(Math.random() * firstName.length)]} #${i}`;
-
-      await prisma.fighter.create({
-        data: {
-          name: fullName,
-          birthday: new Date(2010 + Math.floor(Math.random() * 6), 0, 1), // 2010 - 2015 года рождения
-          weight: 35 + Math.random() * 45, // От 35 до 80 кг
-          order: i,
-          tournamentId: tournament.id,
-          categoryId: randomCategory.id,
-          clubId: randomClub.id,
-        },
-      });
+      if (!targetCategories.some(c => c.id === randCat.id)) {
+        targetCategories.push(randCat);
+      }
     }
 
-    // 6. Создаем по 2 тестовых стартовых матча (Match) в случайных категориях для затравки интерфейса
-    for (let m = 1; m <= 3; m++) {
-      const cat = createdCategories[m];
+    const firstName = [
+      'Александр',
+      'Дмитрий',
+      'Максим',
+      'Сергей',
+      'Андрей',
+      'Алексей',
+      'Илья',
+      'Кирилл',
+      'Артем',
+      'Егор',
+    ];
+    const lastName = [
+      'Иванов',
+      'Петров',
+      'Смирнов',
+      'Сергеев',
+      'Волков',
+      'Кузнецов',
+      'Попов',
+      'Васильев',
+      'Соколов',
+      'Новиков',
+    ];
 
-      // Ищем бойцов, которых мы только что закинули в эту категорию
+    let fighterGlobalOrder = 1;
+
+    // Итерируемся по выбранным категориям и создаем ровно по 9 бойцов в каждой
+    for (const cat of targetCategories) {
+      for (let f = 1; f <= 9; f++) {
+        const randomClub =
+          createdClubs[Math.floor(Math.random() * createdClubs.length)];
+        const fullName = `${lastName[Math.floor(Math.random() * lastName.length)]} ${firstName[Math.floor(Math.random() * firstName.length)]} #${fighterGlobalOrder}`;
+
+        // Генерируем вес, который строго подходит под выбранную категорию
+        let exactWeight = 0;
+        if (cat.maxWeight === null) {
+          exactWeight = 71 + Math.random() * 15; // Для категории "70+" вес 71-86 кг
+        } else {
+          const minLimit = cat.maxWeight - 10;
+          exactWeight = minLimit + Math.random() * 9.5; // Гарантированно попадает в диапазон (например, 30.5 - 39.5 для "до 40")
+        }
+
+        await prisma.fighter.create({
+          data: {
+            name: fullName,
+            birthday: new Date(2010 + Math.floor(Math.random() * 6), 0, 1),
+            weight: parseFloat(exactWeight.toFixed(1)), // Красивое округление веса (например, 43.4)
+            order: fighterGlobalOrder,
+            tournamentId: tournament.id,
+            categoryId: cat.id,
+            clubId: randomClub.id,
+          },
+        });
+
+        fighterGlobalOrder++;
+      }
+
+      // 6. Создаем тестовые матчи для этой наполненной категории
       const fightersInCat = await prisma.fighter.findMany({
         where: { categoryId: cat.id },
-        take: 2,
+        take: 4, // Возьмем первых 4 бойцов для создания пары стартовых матчей
       });
 
-      if (fightersInCat.length >= 2) {
+      if (fightersInCat.length >= 4) {
+        // Матч 1
         await prisma.match.create({
           data: {
             tournamentId: tournament.id,
             categoryId: cat.id,
             round: 1,
-            number: m,
+            number: 1,
             fighter1Id: fightersInCat[0].id,
             fighter2Id: fightersInCat[1].id,
-            slotNumber: m,
-            tatami: Math.random() > 0.5 ? 1 : 2, // Случайный ковер 1 или 2
+            slotNumber: 1,
+            tatami: 1,
+          },
+        });
+        // Матч 2
+        await prisma.match.create({
+          data: {
+            tournamentId: tournament.id,
+            categoryId: cat.id,
+            round: 1,
+            number: 2,
+            fighter1Id: fightersInCat[2].id,
+            fighter2Id: fightersInCat[3].id,
+            slotNumber: 2,
+            tatami: 1,
           },
         });
       }
@@ -208,7 +240,7 @@ async function main() {
   }
 
   console.log(
-    '\n✨ Наполнение базы данных успешно завершено! 5 турниров, по 20 бойцов в каждом, категории и клубы созданы.',
+    '\n✨ Наполнение базы данных успешно завершено! Созданы заполненные категории (по 9 человек) и сгенерированы тестовые матчи.',
   );
 }
 

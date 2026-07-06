@@ -16,18 +16,19 @@ export default async function MatchesPage({
     where: {
       tournamentId: id,
     },
+
     include: {
       category: true,
       fighter1: {
         include: {
           club: true,
-          category: true, // 👈 ДОБАВИЛИ СЮДА
+          category: true,
         },
       },
       fighter2: {
         include: {
           club: true,
-          category: true, // 👈 И СЮДА ТОЖЕ
+          category: true,
         },
       },
     },
@@ -37,7 +38,6 @@ export default async function MatchesPage({
   return (
     <article>
       <h2 className='font-bold text-xl mb-2 '>Поединки</h2>
-      {/* Теперь структуры данных идеально совпадают! */}
       <MatchList tournamentId={id} initialMatches={matches} />
     </article>
   );

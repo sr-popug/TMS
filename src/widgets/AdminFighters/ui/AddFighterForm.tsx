@@ -1,6 +1,7 @@
 'use client';
 import { addClub } from '@/entities/club';
 import { addFighter } from '@/entities/fighter';
+import { Category, Club } from '@/shared/lib/prisma/client';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import {
@@ -15,22 +16,10 @@ import { ChangeEvent, KeyboardEvent, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-interface Club {
-  id: number;
-  title: string;
-}
-
-interface Category {
-  id: string;
-  age: string;
-  weight: string;
-  label: string;
-}
-
 interface Props {
   tournamentId: string;
   clubs: Club[];
-  categories: Category[];
+  categories: (Category & { label: string })[];
   onSuccess: () => void;
   onClubCreated: (club: Club) => void;
 }
@@ -91,6 +80,11 @@ export default function AddFighterForm({
       .filter(c => c.age === age)
       .sort((a, b) => parseFloat(a.weight) - parseFloat(b.weight));
 
+    const absoluteCat = catsInAge.find(c => c.weight.indexOf('+') >= 0);
+    if (absoluteCat?.weight && parseFloat(absoluteCat?.weight || '0') < w) {
+      return absoluteCat;
+    }
+
     return catsInAge.find(c => w <= parseFloat(c.weight)) || null;
   })();
 
@@ -100,7 +94,7 @@ export default function AddFighterForm({
       club: clubRef,
       birthday: birthdayRef,
       weight: weightRef,
-      age: { current: null }, // селекту реф обычно не нужен для фокуса при Enter
+      age: { current: null },
     };
 
     setTimeout(() => {
@@ -242,7 +236,7 @@ export default function AddFighterForm({
     );
     if (existing) return existing.id;
     const created = await addClub({ title, tournamentId });
-    onClubCreated({ id: created.id, title });
+    onClubCreated({ id: created.id, title, tournamentId: tournamentId });
     return created.id;
   };
 

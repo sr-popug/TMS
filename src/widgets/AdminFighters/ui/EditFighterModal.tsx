@@ -1,5 +1,6 @@
 'use client';
 import { changeFighter } from '@/entities/fighter';
+import { Category, Club } from '@/shared/lib/prisma/client';
 import { Button } from '@/shared/ui/button';
 import {
   Dialog,
@@ -18,21 +19,9 @@ import {
   SelectValue,
 } from '@/shared/ui/select';
 import { Loader2 } from 'lucide-react';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 import { FighterWithRelations } from '../types';
-
-interface Club {
-  id: number;
-  title: string;
-}
-
-interface Category {
-  id: string;
-  age: string;
-  weight: string;
-  label: string;
-}
 
 interface Props {
   fighter: FighterWithRelations;
@@ -51,7 +40,6 @@ export default function EditFighterModal({
   onSuccess,
   onClose,
 }: Props) {
-  // Первоначальное форматирование даты из базы данных (Date -> ДД.ММ.ГГГГ)
   const initBirthday = () => {
     const d = new Date(fighter.birthday);
     const day = String(d.getDate()).padStart(2, '0');
@@ -67,9 +55,9 @@ export default function EditFighterModal({
   const [birthdayStr, setBirthdayStr] = useState(initBirthday());
   const [saving, setSaving] = useState(false);
 
-  const ageOptions = [...new Set(categories.map(c => c.age))].sort();
-
-  // --- ТВОЯ КРУТАЯ ФУНКЦИОНАЛЬНОСТЬ МАСКИ И РАСЧЁТОВ ---
+  const ageOptions = useMemo(() => {
+    return [...new Set(categories.map(c => c.age))].sort();
+  }, [categories]);
 
   const formatBirthday = (value: string): string => {
     let clean = value.replace(/[^0-9.]/g, '');
@@ -131,30 +119,51 @@ export default function EditFighterModal({
     return range || '';
   };
 
+  const autoSelectCategory = (
+    currentBirthdayStr: string,
+    currentWeightStr: string,
+  ) => {
+    const parsed = parseBirthday(currentBirthdayStr);
+    if (!parsed) return;
+
+    const calculatedAge = calculateAge(parsed);
+    const group = getAgeGroup(calculatedAge, ageOptions);
+
+    if (group) {
+      const w = parseFloat(currentWeightStr);
+      if (!isNaN(w)) {
+        const catsInAge = categories.filter(c => c.age === group);
+
+        const normalCats = catsInAge
+          .filter(c => !c.weight.includes('+'))
+          .sort((a, b) => parseFloat(a.weight) - parseFloat(b.weight));
+
+        const absoluteCat = catsInAge.find(c => c.weight.includes('+'));
+        const targetCategory = normalCats.find(c => w <= parseFloat(c.weight));
+
+        if (targetCategory) {
+          setCategoryId(targetCategory.id);
+        } else if (absoluteCat) {
+          setCategoryId(absoluteCat.id);
+        }
+      }
+    }
+  };
+
   const handleBirthdayChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const formatted = formatBirthday(value);
     setBirthdayStr(formatted);
 
-    const parsed = parseBirthday(formatted);
-    if (parsed) {
-      const calculatedAge = calculateAge(parsed);
-      const group = getAgeGroup(calculatedAge, ageOptions);
-      if (group) {
-        // Находим весовую категорию в новой возрастной группе, соответствующую текущему весу
-        const w = parseFloat(weight);
-        if (!isNaN(w)) {
-          const catsInAge = categories
-            .filter(c => c.age === group)
-            .sort((a, b) => parseFloat(a.weight) - parseFloat(b.weight));
+    autoSelectCategory(formatted, weight);
+  };
 
-          const targetCategory = catsInAge.find(c => w <= parseFloat(c.weight));
-          if (targetCategory) {
-            setCategoryId(targetCategory.id);
-          }
-        }
-      }
-    }
+  // Слушатель изменения веса
+  const handleWeightChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setWeight(value);
+    // Запускаем подбор сразу с новым значением веса
+    autoSelectCategory(birthdayStr, value);
   };
 
   const handleSave = async () => {
@@ -209,20 +218,20 @@ export default function EditFighterModal({
             />
           </div>
 
-          {/* ВЕС */}
+          {/* ВЕС (Переключен на кастомный обработчик) */}
           <div className='space-y-1'>
             <label className='text-xs font-medium text-muted-foreground'>
               Вес (кг)
             </label>
             <Input
               value={weight}
-              onChange={e => setWeight(e.target.value)}
+              onChange={handleWeightChange}
               placeholder='70.5'
               disabled={saving}
             />
           </div>
 
-          {/* 🔥 ДАТА РОЖДЕНИЯ (Как в AddForm — текстовый инпут с маской и точками) */}
+          {/* ДАТА РОЖДЕНИЯ */}
           <div className='space-y-1'>
             <label className='text-xs font-medium text-muted-foreground'>
               Дата рождения
@@ -259,7 +268,6 @@ export default function EditFighterModal({
             </Select>
           </div>
 
-          {/* КАТЕГОРИЯ (Выбор сохраняется ручной, но обновляется автоматически при смене даты) */}
           {/* КАТЕГОРИЯ */}
           <div className='space-y-1'>
             <label className='text-xs font-medium text-muted-foreground'>
@@ -271,8 +279,7 @@ export default function EditFighterModal({
               disabled={saving}
             >
               <SelectTrigger>
-                {/* 🎯 ТЕПЕРЬ ТУТ КАСТОМНЫЙ ВЫВОД: если категория выбрана, находим её в массиве и выводим красиво */}
-                <SelectValue placeholder='Выберите категорию'>
+                <SelectValue placeholder='Выберите категория'>
                   {categoryId &&
                     (() => {
                       const selectedCat = categories.find(
@@ -293,7 +300,6 @@ export default function EditFighterModal({
                     {categories
                       .filter(c => c.age === age)
                       .map(c => (
-                        // 🎯 И ТУТ: в текст элемента добавляем возрастную группу для наглядности
                         <SelectItem key={c.id} value={c.id}>
                           {c.age} / {c.weight} кг
                         </SelectItem>
